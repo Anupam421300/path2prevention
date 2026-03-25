@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path2Prevention — Sign In</title>
+  <meta name="description" content="Sign in to Path2Prevention — your personalised diabetes prevention companion.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* Clinical Serenity — Login page extras */
+    .auth-left {
+      background: linear-gradient(160deg, #021a19 0%, #042f2e 30%, #064e3b 60%, #059669 100%);
+    }
+    .auth-benefit-item {
+      display: flex; align-items: center; gap: 10px;
+      padding:12px 16px; background: rgba(255,255,255,0.08);
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
+      font-size: 18px; color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+    }
+    .auth-benefit-item .material-symbols-outlined {
+      font-size: 22px; color: #4edea3;
+    }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding:8px 14px; background: rgba(78,222,163,0.15);
+      border: 1px solid rgba(78,222,163,0.3);
+      border-radius: 99px; font-size: 17px; color: #4edea3; font-weight: 600;
+    }
+    .password-strength { height: 3px; border-radius: 2px; background: #e7e8e9; margin-top:8px; overflow: hidden; }
+    .password-strength-bar { height: 100%; border-radius: 2px; width: 0; transition: width 0.3s, background 0.3s; }
+    .input-icon-wrap { position: relative; }
+    .input-icon-wrap .material-symbols-outlined {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 24px; color: #6c7a71; pointer-events: none;
+    }
+    .input-icon-wrap input { padding-left: 44px; }
+    .error-box {
+      display: none; align-items: center; gap: 10px;
+      padding:14px 16px; background: #ffdad6; border-radius: 12px;
+      color: #93000a; font-size: 18px; margin-bottom:18px;
+    }
+    .error-box.visible { display: flex; }
+    .loading-spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: white;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .auth-left-logo {
+      width: 48px; height: 48px; background: linear-gradient(135deg, #10b981, #34d399);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      margin-bottom:22px; backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 6px 16px rgba(16,185,129,0.4), 0 0 20px rgba(16,185,129,0.15);
+    }
+    .auth-left-logo .material-symbols-outlined { font-size:26px; color: white; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left Brand Panel -->
+    <div class="auth-left">
+      <img src="/images/logo!.jpeg" alt="Path2Prevention Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); background: white;">
+      <h1 style="font-size:32px;font-weight:800;margin-bottom:10px;line-height:1.2;letter-spacing:-0.5px;">Path2Prevention</h1>
+      <p style="font-size: 19px;opacity:0.7;margin-bottom:38px;text-align:center;max-width:320px;line-height:1.6;">
+        Personalised lifestyle guidance to prevent Type 2 Diabetes — backed by clinical evidence.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;margin-bottom:38px;">
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">graphic_eq</span>
+          Computed risk score from your health data
+        </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">recommend</span>
+          Personalised recommendations, updated daily
+        </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">insights</span>
+          Track trends across sleep, steps, diet & mood
+        </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">verified_user</span>
+          Evidence-based — WHO, ADA &amp; DPP guidelines
+        </div>
+      </div>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+        <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span>Free to use</div>
+        <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">lock</span>HIPAA-aware</div>
+        <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">science</span>Clinically grounded</div>
+      </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="auth-right">
+      <div class="auth-form">
+        <div style="margin-bottom:34px;">
+          <h2 style="font-size:30px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;">Welcome back</h2>
+          <p style="color:#6c7a71;font-size: 19px;">Sign in to continue your prevention journey.</p>
+        </div>
+
+        <div class="error-box" id="errorBox">
+          <span class="material-symbols-outlined" style="font-size: 22px;flex-shrink:0;">error</span>
+          <span id="errorMsg">Invalid email or password.</span>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="input-group">
+            <label for="emailInput">Email address</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">mail</span>
+              <input class="input-field" type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="passwordInput">Password</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">lock</span>
+              <input class="input-field" type="password" id="passwordInput" placeholder="Enter your password" autocomplete="current-password" required>
+            </div>
+          </div>
+
+          <div style="text-align:right;margin-top:-8px;margin-bottom:22px;">
+            <a href="#" style="font-size: 17px;color:#006c49;font-weight:500;">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="signInBtn">
+            <span id="btnText">Sign in</span>
+          </button>
+        </form>
+
+        <p style="text-align:center;margin-top:26px;font-size: 18px;color:#6c7a71;">
+          Don't have an account?
+          <a href="/register" style="color:#006c49;font-weight:600;margin-left:6px;">Create account</a>
+        </p>
+
+        <p style="text-align:center;margin-top:34px;font-size: 15px;color:#bbcabf;line-height:1.5;">
+          Path2Prevention is a lifestyle self-management tool and is not a substitute for professional medical advice or diagnosis.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorBox = document.getElementById('errorBox');
+    const errorMsg = document.getElementById('errorMsg');
+    const signInBtn = document.getElementById('signInBtn');
+    const btnText = document.getElementById('btnText');
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorBox.classList.add('visible');
+    }
+    function hideError() { errorBox.classList.remove('visible'); }
+
+    function setLoading(loading) {
+      signInBtn.disabled = loading;
+      btnText.innerHTML = loading
+        ? '<span class="loading-spinner"></span> Signing in…'
+        : 'Sign in';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showError('Please enter your email and password.');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login failed');
+
+        localStorage.setItem('p2p_token', data.token);
+        localStorage.setItem('p2p_user', JSON.stringify(data.user));
+        window.location.href = '/app';
+      } catch (err) {
+        showError(err.message || 'Something went wrong. Please try again.');
+        setLoading(false);
+      }
+    });
+
+    // If already logged in, redirect
+    if (localStorage.getItem('p2p_token')) {
+      window.location.href = '/app';
+    }
+  </script>
+</body>
+</html>

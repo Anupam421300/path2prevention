@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path2Prevention</title>
+  <meta name="description" content="Track your diabetes risk and build healthier habits with Path2Prevention.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      user-select: none;
+    }
+
+    /* ── Layout transitions ── */
+
+    /* ── Tab transitions ── */
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: tabFadeIn 0.25s ease forwards;
+    }
+
+    @keyframes tabFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── Onboarding overlay ── */
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 26px;
+      opacity: 1;
+      transition: opacity var(--transition);
+    }
+
+    .onboarding-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ── Modal backdrop ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(25, 28, 29, 0.45);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+    }
+
+    .modal-backdrop.hidden {
+      display: none;
+    }
+
+    .modal-panel {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(25, 28, 29, 0.1), 0 8px 20px rgba(25, 28, 29, 0.06);
+      width: 100%;
+      max-width: 520px;
+      overflow: hidden;
+      transform: scale(0.94);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-backdrop.open .modal-panel {
+      transform: scale(1);
+    }
+
+    /* ── Evidence Drawer ── */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(25, 28, 29, 0.35);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+    }
+
+    .drawer-backdrop.hidden {
+      display: none;
+    }
+
+    .drawer-panel {
+      width: 380px;
+      max-width: 100%;
+      background: #ffffff;
+      box-shadow: -20px 0 60px rgba(25, 28, 29, 0.08);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .drawer-backdrop.open .drawer-panel {
+      transform: translateX(0);
+    }
+
+    /* ── Celebration overlay ── */
+    #celebrationOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: linear-gradient(135deg, #006c49 0%, #10b981 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 42px;
+      text-align: center;
+      color: white;
+    }
+
+    #celebrationOverlay.hidden {
+      display: none;
+    }
+
+    .celebration-badge-ring {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 12px solid rgba(255, 255, 255, 0.1);
+      margin: 0 auto 24px;
+      animation: breathe 2s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.04);
+      }
+    }
+
+    .confetti-piece {
+      position: absolute;
+      border-radius: 2px;
+      opacity: 0.5;
+      animation: confettiFall linear infinite;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* ── Very High Risk modal ── */
+    .risk-warn-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: #ffdad6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: pulseWarn 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseWarn {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.15);
+      }
+
+      50% {
+        box-shadow: 0 0 0 16px rgba(186, 26, 26, 0);
+      }
+    }
+
+    /* ── Weekly report grade circle ── */
+    .grade-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #006c49;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      font-weight: 900;
+      color: white;
+      font-style: italic;
+      box-shadow: 0 0 0 10px rgba(0, 108, 73, 0.1);
+    }
+
+    /* ── Modal & Drawer Overrides ── */
+  </style>
+</head>
+
+<body>
+
+  <!-- ════════ ONBOARDING OVERLAY ════════ -->
+  <div class="onboarding-overlay hidden" id="onboardingOverlay">
+    <div class="card"
+      style="width: 100%; max-width: 560px; max-height: 95vh; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: var(--shadow-xl); padding:34px 32px 24px;">
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;flex-shrink:0;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div
+            style="width:40px;height:40px;background:var(--green-gradient);border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-btn);">
+            <span class="material-symbols-outlined" style="font-size: 26px;color:white;">health_and_safety</span>
+          </div>
+          <span
+            style="font-size: 22px;font-weight:800;color:var(--text-primary);letter-spacing:-0.5px;">Path2Prevention</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <span
+            style="font-size: 16px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;"
+            id="stepLabel">Step 1 of 4</span>
+          <div style="display:flex;gap:6px;" id="stepDots"></div>
+        </div>
+      </div>
+      <!-- Content -->
+      <div
+        style="position:relative; width:100%; flex: 1; display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden; padding-right:10px;"
+        id="onboardingContent"></div>
+    </div>
+  </div>
+
+  <!-- ════════ APP SHELL ════════ -->
+  <div class="app-shell" id="appShell">
+
+    <!-- Static Sidebar -->
+    <aside class="slidebar" id="slidebar">
+      <div class="slidebar-header">
+        <div class="slidebar-header-brand" style="cursor: pointer; display: flex; align-items: center; gap: 12px;"
+          onclick="document.getElementById('nav-dashboard').click();">
+          <img src="/images/logo!.jpeg" alt="Logo"
+            style="margin-bottom: 0; width: 72px; height: 72px; border-radius: 16px; object-fit: contain; background: white; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <div class="slidebar-title">Path2Prevention</div>
+        </div>
+      </div>
+
+      <nav class="slidebar-nav">
+        <a href="#" class="slidebar-link active" data-tab="dashboard" id="nav-dashboard">
+          <span class="material-symbols-outlined">dashboard</span> Dashboard
+        </a>
+        <a href="#" class="slidebar-link" data-tab="log" id="nav-log">
+          <span class="material-symbols-outlined">add_circle</span> Log Today
+        </a>
+        <a href="#" class="slidebar-link" data-tab="insights" id="nav-insights">
+          <span class="material-symbols-outlined">bar_chart</span> Insights
+        </a>
+        <a href="#" class="slidebar-link" data-tab="settings" id="nav-settings">
+          <span class="material-symbols-outlined">settings</span> Settings
+        </a>
+      </nav>
+
+      <div class="slidebar-footer">
+        <div class="slidebar-user-box">
+          <div class="slidebar-avatar" id="sidebarAvatar">U</div>
+          <div class="slidebar-user-details">
+            <div class="slidebar-user-name" id="sidebarName">User</div>
+            <button class="slidebar-logout" onclick="logout()">Sign out</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="tab-content active" id="tab-dashboard"></div>
+      <div class="tab-content" id="tab-log"></div>
+      <div class="tab-content" id="tab-insights"></div>
+      <div class="tab-content" id="tab-settings"></div>
+    </main>
+  </div>
+
+  <!-- ════════ MODAL: Risk Breakdown ════════ -->
+  <div class="modal-backdrop hidden" id="riskBreakdownBackdrop">
+    <div class="modal-panel">
+      <div style="padding:30px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;">
+          <h2 style="font-size: 24px;font-weight:800;letter-spacing:-0.3px;">Your risk score breakdown</h2>
+          <button onclick="closeModal('riskBreakdownBackdrop')"
+            style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:#6c7a71;"
+            title="Close">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <div id="riskBreakdownContent" style="max-height: 60vh; overflow-y: auto; padding-right: 8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ DRAWER: Evidence Panel ════════ -->
+  <div class="drawer-backdrop hidden" id="evidenceDrawerBackdrop">
+    <div class="drawer-panel">
+      <div
+        style="padding:26px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(187,202,191,0.2);">
+        <h3 style="font-size: 20px;font-weight:700;">Evidence for this recommendation</h3>
+        <button onclick="closeDrawer()"
+          style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:#6c7a71;">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:22px;" id="evidencePanelContent">
+        <div class="skeleton skeleton-card" style="height:120px;margin-bottom:14px;"></div>
+        <div class="skeleton skeleton-card" style="height:120px;margin-bottom:14px;"></div>
+      </div>
+      <div style="padding:18px;background:#f8f9fa;border-top:1px solid rgba(187,202,191,0.2);">
+        <p style="font-size: 15px;color:#6c7a71;text-align:center;line-height:1.5;font-style:italic;">Evidence is for
+          educational purposes only. Always consult your healthcare professional.</p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ════════ MODAL: Very High Risk Warning ════════ -->
+  <div class="modal-backdrop hidden" id="riskWarningBackdrop">
+    <div class="modal-panel" style="max-width:560px;">
+      <div style="padding:38px;text-align:center;">
+        <div class="risk-warn-icon">
+          <span class="material-symbols-outlined"
+            style="font-size:42px;color:#ba1a1a;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">warning</span>
+        </div>
+        <h3 style="font-size:26px;font-weight:800;margin-bottom:14px;">Urgent: Very High Risk Detected</h3>
+        <p style="font-size: 19px;color:#3c4a42;line-height:1.7;margin-bottom:22px;">
+          Based on your current health indicators, our system has identified a <strong style="color:#ba1a1a;">Very High
+            Risk</strong> status.
+        </p>
+        <div
+          style="background:#f8f9fa;border-radius:14px;padding:18px;text-align:left;border-left:4px solid #ba1a1a;margin-bottom:26px;">
+          <p
+            style="font-size: 17px;font-weight:600;color:#191c1d;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+            <span class="material-symbols-outlined" style="font-size: 20px;color:#ba1a1a;">info</span>Important
+            Disclaimer
+          </p>
+          <p style="font-size: 17px;color:#3c4a42;line-height:1.6;">
+            Path2Prevention is designed for health self-management and habit tracking. This application is <strong>not a
+              substitute</strong> for professional clinical diagnosis, medical advice, or emergency treatment.
+          </p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button onclick="closeModal('riskWarningBackdrop')" class="btn btn-primary" style="width:100%;">I understand —
+            Continue</button>
+        </div>
+      </div>
+      <div
+        style="padding:14px 20px;background:#f8f9fa;border-top:1px solid rgba(187,202,191,0.2);display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;align-items:center;gap:6px;color:#6c7a71;">
+          <span class="material-symbols-outlined" style="font-size: 18px;">shield_person</span>
+          <span style="font-size: 15px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Medical Safety
+            Layer</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:7px;height:7px;border-radius:50%;background:#ba1a1a;margin-right:6px;"></div>
+          <span style="font-size: 14px;font-weight:700;text-transform:uppercase;color:#6c7a71;">Priority Alert</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ════════ TOAST CONTAINER ════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ════════ SCRIPTS ════════ -->
+  <script src="/js/api.js"></script>
+  <script src="/js/state.js"></script>
+  <script src="/js/popups.js"></script>
+  <script src="/js/onboarding.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/log.js"></script>
+  <script src="/js/insights.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/router.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path2Prevention — Create Account</title>
+  <meta name="description" content="Create your free Path2Prevention account and start your diabetes prevention journey.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .auth-left {
+      background: linear-gradient(160deg, #021a19 0%, #042f2e 30%, #064e3b 60%, #059669 100%);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .social-proof {
+      display: flex; flex-direction: column; gap: 12px;
+      width: 100%; max-width: 340px;
+    }
+    .testimonial-card {
+      padding:18px; background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px; backdrop-filter: blur(8px);
+    }
+    .testimonial-card .quote { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.5; margin-bottom:12px; }
+    .testimonial-card .author { display: flex; align-items: center; gap: 8px; }
+    .author-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #006c49;
+    }
+    .author-name { font-size: 17px; font-weight: 600; color: white; }
+    .author-detail { font-size: 15px; color: rgba(255,255,255,0.5); }
+    .input-icon-wrap { position: relative; }
+    .input-icon-wrap .material-symbols-outlined {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 24px; color: #6c7a71; pointer-events: none;
+    }
+    .input-icon-wrap input { padding-left: 44px; }
+    .strength-bars { display: flex; gap: 4px; margin-top:8px; }
+    .strength-bar { flex: 1; height: 3px; border-radius: 2px; background: #e7e8e9; transition: background 0.3s; }
+    .strength-label { font-size: 16px; margin-top:6px; font-weight: 500; }
+    .error-box {
+      display: none; align-items: center; gap: 10px;
+      padding:14px 16px; background: #ffdad6; border-radius: 12px;
+      color: #93000a; font-size: 18px; margin-bottom:18px;
+    }
+    .error-box.visible { display: flex; }
+    .loading-spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4); border-top-color: white;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .checkbox-wrap { display: flex; align-items: flex-start; gap: 10px; margin-bottom:22px; }
+    .checkbox-wrap input[type=checkbox] { margin-top: 2px; accent-color: #006c49; width: 16px; height: 16px; cursor: pointer; }
+    .checkbox-wrap label { font-size: 17px; color: #3c4a42; line-height: 1.5; cursor: pointer; }
+    .auth-left-logo {
+      width: 48px; height: 48px; background: linear-gradient(135deg, #10b981, #34d399);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      margin-bottom:22px; backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 6px 16px rgba(16,185,129,0.4), 0 0 20px rgba(16,185,129,0.15);
+    }
+    .auth-left-logo .material-symbols-outlined { font-size:26px; color: white; }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left Brand Panel -->
+    <div class="auth-left">
+      <img src="/images/logo!.jpeg" alt="Path2Prevention Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); background: white;">
+      <h1 style="font-size:30px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px;">Start your journey</h1>
+      <p style="font-size: 18px;opacity:0.65;margin-bottom:30px;text-align:center;max-width:300px;line-height:1.6;">
+        Thousands are already reducing their diabetes risk with personalised, clinically-grounded guidance.
+      </p>
+
+      <div class="social-proof">
+        <div class="testimonial-card">
+          <p class="quote">"Reduced my HbA1c from 6.1% to 5.6% in 3 months by following the recommendations."</p>
+          <div class="author">
+            <div class="author-avatar" style="background:#a6f2d1;">R</div>
+            <div>
+              <div class="author-name">Rohan M.</div>
+              <div class="author-detail">Risk reduced from High → Medium</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="quote">"The what-if simulator showed me exactly how 20 extra minutes of walking would change my score."</p>
+          <div class="author">
+            <div class="author-avatar" style="background:#6ffbbe;">P</div>
+            <div>
+              <div class="author-name">Priya S.</div>
+              <div class="author-detail">14-day streak maintained</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="auth-right">
+      <div class="auth-form" style="max-width:440px;">
+        <div style="margin-bottom:30px;">
+          <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px;">Create your account</h2>
+          <p style="color:#6c7a71;font-size: 18px;">Free forever. No credit card required.</p>
+        </div>
+
+        <div class="error-box" id="errorBox">
+          <span class="material-symbols-outlined" style="font-size: 22px;flex-shrink:0;">error</span>
+          <span id="errorMsg">Something went wrong.</span>
+        </div>
+
+        <form id="registerForm" novalidate>
+          <div class="input-group">
+            <label for="firstNameInput">First name</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">person</span>
+              <input class="input-field" type="text" id="firstNameInput" placeholder="Your first name" autocomplete="given-name" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="emailInput">Email address</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">mail</span>
+              <input class="input-field" type="email" id="emailInput" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="passwordInput">Password</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">lock</span>
+              <input class="input-field" type="password" id="passwordInput" placeholder="At least 8 characters" autocomplete="new-password" required>
+            </div>
+            <div class="strength-bars">
+              <div class="strength-bar" id="sb1"></div>
+              <div class="strength-bar" id="sb2"></div>
+              <div class="strength-bar" id="sb3"></div>
+              <div class="strength-bar" id="sb4"></div>
+            </div>
+            <p class="strength-label" id="strengthLabel" style="color:#6c7a71;"></p>
+          </div>
+
+          <div class="input-group">
+            <label for="confirmPasswordInput">Confirm password</label>
+            <div class="input-icon-wrap">
+              <span class="material-symbols-outlined">lock_reset</span>
+              <input class="input-field" type="password" id="confirmPasswordInput" placeholder="Repeat your password" autocomplete="new-password" required>
+            </div>
+          </div>
+
+          <div class="checkbox-wrap">
+            <input type="checkbox" id="termsCheck" required>
+            <label for="termsCheck">
+              I agree to the <a href="#" style="color:#006c49;font-weight:600;">Terms of Service</a> and <a href="#" style="color:#006c49;font-weight:600;">Privacy Policy</a>. I understand this app is not a substitute for medical advice.
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
+            <span id="btnText">Create account</span>
+          </button>
+        </form>
+
+        <p style="text-align:center;margin-top:22px;font-size: 18px;color:#6c7a71;">
+          Already have an account?
+          <a href="/login" style="color:#006c49;font-weight:600;margin-left:6px;">Sign in</a>
+        </p>
+
+        <p style="text-align:center;margin-top:26px;font-size: 15px;color:#bbcabf;line-height:1.5;">
+          Path2Prevention is a self-management tool and is not a substitute for professional medical advice.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '/api';
+    const form = document.getElementById('registerForm');
+    const firstNameInput = document.getElementById('firstNameInput');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const confirmInput = document.getElementById('confirmPasswordInput');
+    const termsCheck = document.getElementById('termsCheck');
+    const errorBox = document.getElementById('errorBox');
+    const errorMsg = document.getElementById('errorMsg');
+    const registerBtn = document.getElementById('registerBtn');
+    const btnText = document.getElementById('btnText');
+
+    // Password strength
+    const bars = ['sb1','sb2','sb3','sb4'].map(id => document.getElementById(id));
+    const strengthLabel = document.getElementById('strengthLabel');
+    const levels = [
+      { color: '#ba1a1a', label: 'Too weak' },
+      { color: '#f59e0b', label: 'Weak' },
+      { color: '#10b981', label: 'Good' },
+      { color: '#006c49', label: 'Strong' },
+    ];
+
+    function calcStrength(pwd) {
+      let score = 0;
+      if (pwd.length >= 8) score++;
+      if (/[A-Z]/.test(pwd)) score++;
+      if (/[0-9]/.test(pwd)) score++;
+      if (/[^A-Za-z0-9]/.test(pwd)) score++;
+      return score;
+    }
+
+    passwordInput.addEventListener('input', () => {
+      const score = calcStrength(passwordInput.value);
+      bars.forEach((bar, i) => {
+        bar.style.background = i < score ? levels[Math.max(0, score-1)].color : '#e7e8e9';
+      });
+      strengthLabel.textContent = passwordInput.value ? levels[Math.max(0, Math.min(3, score-1))].label : '';
+      strengthLabel.style.color = score > 0 ? levels[score-1].color : '#6c7a71';
+    });
+
+    function showError(msg) { errorMsg.textContent = msg; errorBox.classList.add('visible'); }
+    function hideError() { errorBox.classList.remove('visible'); }
+
+    function setLoading(loading) {
+      registerBtn.disabled = loading;
+      btnText.innerHTML = loading
+        ? '<span class="loading-spinner"></span> Creating account…'
+        : 'Create account';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+
+      const firstName = firstNameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      if (!firstName) return showError('Please enter your first name.');
+      if (!email) return showError('Please enter a valid email address.');
+      if (password.length < 8) return showError('Password must be at least 8 characters.');
+      if (password !== confirmPassword) return showError('Passwords do not match.');
+      if (!termsCheck.checked) return showError('Please accept the Terms of Service to continue.');
+
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_BASE}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName, email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Registration failed');
+
+        localStorage.setItem('p2p_token', data.token);
+        localStorage.setItem('p2p_user', JSON.stringify(data.user));
+        window.location.href = '/app';
+      } catch (err) {
+        showError(err.message || 'Something went wrong. Please try again.');
+        setLoading(false);
+      }
+    });
+
+    if (localStorage.getItem('p2p_token')) {
+      window.location.href = '/app';
+    }
+  </script>
+</body>
+</html>

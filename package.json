@@ -1,0 +1,37 @@
+{
+  "name": "path2prevention",
+  "version": "3.0.0",
+  "description": "Diabetes risk prevention web application",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon -w api -w src api/index.js",
+    "seed": "node scripts/seed.js",
+    "seed:test": "node scripts/seedTestData.js",
+    "seed:test:email": "node scripts/seedTestData.js --email=",
+    "import-rules": "node scripts/import_rules.js"
+  },
+  "dependencies": {
+    "archiver": "^6.0.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0",
+    "pdfkit": "^0.15.2",
+    "puppeteer": "^24.40.0",
+    "web-push": "^3.6.7",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
