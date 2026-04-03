@@ -67,15 +67,16 @@ const DAY_PROFILES = [
   { steps: 4400, sleep: 6.0, water: 4, sugary: 2, fastFood: 1, dietScore: 5, sedentary: 9, mood: 3, stress: 3, activities: [] },
   { steps: 7200, sleep: 7.5, water: 6, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 4, stress: 2, activities: [{ type: 'yoga', intensity: 'light', minutes: 30 }, { type: 'walking', intensity: 'moderate', minutes: 20 }] },
   // ── Days 8–1: great habits (original week 2) ──
-  { steps: 7800, sleep: 7.5, water: 6, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 4, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 35 }] },
-  { steps: 8500, sleep: 8.0, water: 7, sugary: 0, fastFood: 0, dietScore: 8, sedentary: 6, mood: 4, stress: 2, activities: [{ type: 'cycling', intensity: 'moderate', minutes: 30 }] },
-  { steps: 9200, sleep: 7.5, water: 7, sugary: 0, fastFood: 0, dietScore: 8, sedentary: 6, mood: 4, stress: 1, activities: [{ type: 'running', intensity: 'moderate', minutes: 25 }] },
-  { steps: 7600, sleep: 7.0, water: 6, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 3, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 30 }] },
+  // ── Days 6–0 (Current Week): consistently hitting all 3 goals exactly or above ──
+  { steps: 7800, sleep: 7.5, water: 8, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 4, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 35 }] },
+  { steps: 8500, sleep: 8.0, water: 8, sugary: 0, fastFood: 0, dietScore: 8, sedentary: 6, mood: 4, stress: 2, activities: [{ type: 'cycling', intensity: 'moderate', minutes: 30 }] },
+  { steps: 9200, sleep: 7.5, water: 9, sugary: 0, fastFood: 0, dietScore: 8, sedentary: 6, mood: 4, stress: 1, activities: [{ type: 'running', intensity: 'moderate', minutes: 25 }] },
+  { steps: 7600, sleep: 7.5, water: 8, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 3, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 30 }] },
   { steps: 9800, sleep: 8.0, water: 8, sugary: 0, fastFood: 0, dietScore: 9, sedentary: 5, mood: 5, stress: 1, activities: [{ type: 'running', intensity: 'vigorous', minutes: 30 }] },
-  { steps: 10200, sleep: 8.0, water: 8, sugary: 0, fastFood: 0, dietScore: 9, sedentary: 5, mood: 5, stress: 1, activities: [{ type: 'swimming', intensity: 'moderate', minutes: 40 }] },
-  { steps: 11000, sleep: 8.5, water: 8, sugary: 0, fastFood: 0, dietScore: 9, sedentary: 4, mood: 5, stress: 1, activities: [{ type: 'running', intensity: 'vigorous', minutes: 35 }] },
-  // day 0 → today
-  { steps: 6500, sleep: 7.5, water: 6, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 4, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 30 }] },
+  { steps: 10200, sleep: 8.0, water: 10, sugary: 0, fastFood: 0, dietScore: 9, sedentary: 5, mood: 5, stress: 1, activities: [{ type: 'swimming', intensity: 'moderate', minutes: 40 }] },
+  { steps: 11000, sleep: 8.5, water: 9, sugary: 0, fastFood: 0, dietScore: 9, sedentary: 4, mood: 5, stress: 1, activities: [{ type: 'running', intensity: 'vigorous', minutes: 35 }] },
+  // day 0 → today (hitting the exact numbers from the demo or similar)
+  { steps: 7800, sleep: 7.5, water: 8, sugary: 1, fastFood: 0, dietScore: 7, sedentary: 7, mood: 4, stress: 2, activities: [{ type: 'walking', intensity: 'moderate', minutes: 30 }] },
 ];
 
 // ── Risk scores aligned to improvement trend (25 days) ──────────────
@@ -253,7 +254,7 @@ async function seed() {
   // ── 1. Goals ─────────────────────────────────────────────────
   await models.Goal.findOneAndUpdate(
     { userId: uid },
-    { userId: uid, stepsGoalDaily: 7000, activityGoalWeeklyMin: 150, sleepGoalHours: 7.5, waterGoalGlasses: 8, familyHistoryAdjusted: true },
+    { userId: uid, stepsGoalDaily: 6000, activityGoalWeeklyMin: 150, sleepGoalHours: 7.5, waterGoalGlasses: 8, familyHistoryAdjusted: true },
     { upsert: true, new: true }
   );
   console.log('✓ Goals created');

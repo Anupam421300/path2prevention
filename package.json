@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node api/index.js",
     "dev": "nodemon -w api -w src api/index.js",
-    "seed": "node scripts/seed.js",
-    "seed:test": "node scripts/seedTestData.js",
+    "clear": "node scripts/clearUsers.js",
     "seed:rules": "node scripts/import_rules.js"
   },
   "dependencies": {
