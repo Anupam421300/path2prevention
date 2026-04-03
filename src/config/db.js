@@ -12,7 +12,7 @@ async function connectDB() {
     if (!uri) throw new Error('MONGODB_URI environment variable not set');
 
     cached.promise = mongoose.connect(uri, {
-      bufferCommands: false,
+      serverSelectionTimeoutMS: 15000,
     }).then((m) => {
       console.log('MongoDB connected');
       return m;

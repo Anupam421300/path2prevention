@@ -21,6 +21,16 @@ if (process.env.NODE_ENV !== 'production') app.use(morgan('dev'));
 let dbReady = connectDB().catch(err => console.error('DB connection failed:', err));
 app.dbReady = dbReady;
 
+// Ensure database is ready before processing API routes
+app.use('/api', async (req, res, next) => {
+  try {
+    await app.dbReady;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
