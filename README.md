@@ -1,5 +1,9 @@
 # 🩺 Path2Prevention
 
+<div align="center">
+  <img src="public/images/logo!.jpeg" alt="Path2Prevention Logo" width="200" />
+</div>
+
 > **Understand your diabetes risk. Build healthier habits. Take control.**
 
 A full-stack web application that calculates personalised diabetes risk scores, tracks daily health logs, and delivers evidence-based recommendations — all without any medical registration required.
