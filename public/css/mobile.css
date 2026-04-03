@@ -1,0 +1,406 @@
+/* ==========================================================================
+   MOBILE-FIRST OVERRIDES
+   These styles strictly apply to viewport widths <= 768px, ensuring the 
+   desktop layout remains completely untouched.
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+  
+  /* 1. Base Variables & Structural Resets */
+  :root {
+    --mobile-nav-height: 64px;
+    --mobile-top-bar-height: 56px;
+    --safe-area-padding: 16px;
+  }
+
+  body {
+    padding-bottom: var(--mobile-nav-height); /* Space for bottom nav */
+    overflow-x: hidden;
+  }
+
+  /* Hide Desktop Sidebar */
+  #slidebar {
+    display: none !important;
+  }
+
+  .app-shell {
+    padding-left: 0 !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: var(--safe-area-padding) !important;
+    padding-top: calc(var(--mobile-top-bar-height) + var(--safe-area-padding)) !important;
+  }
+
+  /* 2. Top App Bar (Mobile Only) */
+  .mobile-top-bar {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--mobile-top-bar-height);
+    background: #ffffff !important; /* Solid background */
+    z-index: 900;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    padding: 0 var(--safe-area-padding);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .mobile-top-bar .brand-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* 3. Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--mobile-nav-height);
+    background: #ffffff !important; /* Solid background as requested */
+    z-index: 1000;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08); /* Slightly stronger shadow for solid bg */
+    border-top: 1px solid rgba(0,0,0,0.04);
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom, 0); 
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.70rem;
+    font-weight: 500;
+    width: 25%;
+    height: 100%;
+    transition: color 0.2s;
+  }
+
+  .mobile-nav-item i {
+    font-size: 1.3rem;
+    margin-bottom: 3px;
+  }
+
+  .mobile-nav-item.active {
+    color: var(--primary);
+  }
+
+  /* 4. Login & Register Premium Mobile Flow */
+  .auth-page {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: auto !important;
+    background: linear-gradient(160deg, #021a19 0%, #042f2e 30%, #064e3b 60%, #059669 100%) !important;
+    padding: 30px 20px 60px 20px !important;
+  }
+
+  .auth-left {
+    display: contents !important; /* Allows children to participate in the flex-column of auth-page */
+  }
+  
+  .auth-brand {
+    order: 1 !important;
+    width: 100% !important;
+    margin-bottom: 26px !important;
+    color: white !important;
+  }
+
+  .auth-brand img {
+    width: 84px !important;
+    height: 84px !important;
+    margin-bottom: 16px !important;
+    object-fit: contain !important;
+  }
+
+  .auth-brand h1 {
+    font-size: 28px !important;
+    text-align: center !important;
+    margin-bottom: 8px !important;
+  }
+
+  .auth-brand p {
+    font-size: 16px !important;
+    text-align: center !important;
+    color: rgba(255,255,255,0.85) !important;
+    margin: 0 auto !important;
+  }
+
+  .auth-right {
+    order: 2 !important;
+    width: 100% !important;
+    padding: 36px 24px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 32px !important;
+    margin-top: 0 !important; /* No more overlap hack */
+    margin-bottom: 38px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255,255,255,0.8) !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  .auth-features, .social-proof {
+    order: 3 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 24px !important;
+  }
+  
+  .auth-benefit-item,
+  .testimonial-card {
+    padding: 14px !important;
+    font-size: 16px !important;
+    color: white !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .auth-benefit-item .material-symbols-outlined {
+    font-size: 22px !important;
+    color: #4edea3 !important;
+  }
+
+  .auth-stats {
+    order: 4 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+  
+  .auth-stats .stat-pill {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    background: rgba(78,222,163,0.15) !important;
+    border: 1px solid rgba(78,222,163,0.3) !important;
+    color: #4edea3 !important;
+    border-radius: 99px !important;
+  }
+
+  .auth-form {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .auth-form h2 {
+    font-size: 24px !important;
+  }
+
+  .auth-form p {
+    font-size: 16px !important;
+  }
+
+  /* Adjust inputs for mobile */
+  .input-group label {
+    font-size: 15px !important;
+  }
+
+  .input-field {
+    height: 52px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+  }
+  
+  .btn-primary.btn-full {
+    height: 52px !important;
+    border-radius: 12px !important;
+    font-size: 18px !important;
+  }
+
+  /* Remove conflicting desktop height locks if any exist inside main.css */
+  .auth-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    align-items: center;
+  }
+
+  /* 5. Onboarding Mobile Overrides */
+  .onboarding-overlay {
+    padding: 0 !important; /* Full bleed on mobile */
+  }
+
+  .onboarding-overlay .card {
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    padding: 24px 16px 16px !important;
+  }
+
+  /* Override hardcoded inline grid for 1fr 1fr */
+  #onboardingContent > div > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  #onboardingContent h2 {
+    font-size: 26px !important;
+  }
+
+  #onboardingContent p {
+    font-size: 16px !important;
+  }
+  
+  .btn-ghost {
+    padding: 0 16px !important;
+  }
+
+  /* 6. Dashboard Mobile Overrides */
+  .dash-bento-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .dash-bento-grid .card[class*="dash-card-span-"] {
+    width: 100% !important;
+  }
+
+  .dash-chart-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  
+  /* Expand gauge canvas space slightly on mobile since we have full width */
+  #riskGaugeCanvas {
+    max-width: 250px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* 7. Log Today Mobile Overrides */
+  .log-bento-grid,
+  .log-mobile-col,
+  .log-mobile-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  
+  .log-save-sticky {
+    bottom: var(--mobile-nav-height) !important;
+  }
+
+  .water-drop .material-symbols-outlined {
+    font-size: 32px !important;
+  }
+
+  .slider-input {
+    height: 32px !important;
+  }
+  
+  .counter-input, .counter-btn {
+    height: 52px !important;
+  }
+  
+  .activity-row {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  
+  .activity-row > select, .activity-row > input {
+    width: 100% !important;
+    height: 48px !important;
+  }
+  
+  /* 8. Insights Mobile Overrides */
+  .ins-bento-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  
+  .ins-bento-grid .card.ins-card-span-2 {
+    width: 100% !important;
+  }
+  
+  .insight-tab {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+  }
+  
+  .chart-tab {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+  }
+  
+  .chart-container {
+    height: 300px !important; /* Slightly compress height to fit mobile screen better */
+  }
+
+  /* 9. Settings Mobile Overrides */
+  .set-bento-grid,
+  .set-mobile-col {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  
+  .set-bento-grid .card.set-card-span-2 {
+    width: 100% !important;
+  }
+  
+  /* Make settings inputs span full width */
+  .set-mobile-col .input-group {
+    width: 100% !important;
+  }
+  
+  /* 10. Modals & Toasts Mobile Overrides */
+  .modal-content {
+    padding: 24px !important;
+    width: 95% !important;
+  }
+  
+  .toast-container {
+    top: 16px !important;
+    left: 16px !important;
+    right: 16px !important;
+    width: auto !important;
+    align-items: center;
+  }
+  
+  .toast {
+    max-width: 100% !important;
+    width: 100% !important;
+    justify-content: center;
+    border-radius: 12px !important;
+  }
+
+}
+
+/* Hide mobile structures on Desktop explicitly for safety */
+@media screen and (min-width: 769px) {
+  .mobile-top-bar,
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
