@@ -16,7 +16,9 @@ async function apiFetch(path, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const cacheBuster = path.includes('?') ? `&_t=${Date.now()}` : `?_t=${Date.now()}`;
+  const fetchUrl = `${API_BASE}${path}${options.method && options.method !== 'GET' ? '' : cacheBuster}`;
+  const res = await fetch(fetchUrl, { ...options, headers });
 
   if (res.status === 401) { logout(); throw new Error('Session expired'); }
 

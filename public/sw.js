@@ -1,4 +1,4 @@
-const CACHE_NAME = 'p2p-v3';
+const CACHE_NAME = 'p2p-v4';
 const STATIC_ASSETS = [
   '/app',
   '/css/main.css',
@@ -16,6 +16,9 @@ self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(STATIC_ASSETS)));
   self.skipWaiting();
 });
+
+
+
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))));

@@ -2,19 +2,37 @@
   "version": 2,
   "rewrites": [
     { "source": "/api/:path*", "destination": "/api/index.js" },
-    { "source": "/login", "destination": "/public/login.html" },
-    { "source": "/register", "destination": "/public/register.html" },
-    { "source": "/app", "destination": "/public/app.html" },
-    { "source": "/", "destination": "/public/login.html" }
+    { "source": "/login",      "destination": "/public/login.html" },
+    { "source": "/register",   "destination": "/public/register.html" },
+    { "source": "/app",        "destination": "/public/app.html" },
+    { "source": "/",           "destination": "/public/login.html" }
   ],
   "headers": [
     {
       "source": "/api/:path*",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
     },
     {
       "source": "/sw.js",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" },
+        { "key": "Service-Worker-Allowed", "value": "/" }
+      ]
+    },
+    {
+      "source": "/css/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/js/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/images/:path*",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]
 }

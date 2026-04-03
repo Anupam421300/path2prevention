@@ -199,7 +199,6 @@ function ob_step2_next() {
   if (hba1c > 0) onboardingData.hba1cPct = hba1c;
   onboardingData.familyHistory = {
     firstDegreeT2D: selectedConditions.has('Type 2 Diabetes') ? 'yes' : 'no',
-    firstDegreeT1D: selectedConditions.has('Type 1 Diabetes') ? 'yes' : 'no',
   };
   onboardingStep = 3;
   renderOnboardingStep();

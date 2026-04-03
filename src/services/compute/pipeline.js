@@ -89,13 +89,9 @@ function computeMetrics(facts) {
 // ═══════════ Step 3: computeFamilyHistoryWeight ═══════════
 function computeFamilyHistoryWeight(familyHistory) {
   if (!familyHistory) return 0;
-  let weight = 0;
-  if (familyHistory.firstDegreeT2D === 'yes') {
-    weight += familyHistory.firstDegreeT2DRelatives === 'both' ? 20 : 15;
-  }
-  if (familyHistory.firstDegreeT1D === 'yes') weight += 10;
-  if (familyHistory.firstDegreeT2D !== 'yes' && familyHistory.secondDegree === 'yes') weight += 7;
-  return Math.min(weight, 20);
+  // Onboarding only collects: Type 2 Diabetes (yes/no)
+  if (familyHistory.firstDegreeT2D === 'yes') return 15;
+  return 0;
 }
 
 // ═══════════ Step 4: computeRiskIndex ═══════════
@@ -120,10 +116,10 @@ function computeRiskIndex(metrics, fhWeight, profile) {
     breakdown.push({ factor: 'Age', contribution: 1, note: 'Age > 60 increases baseline risk marginally.' });
   }
 
-  // Family history
+  // Family history (T2D only — matches onboarding options)
   if (fhWeight > 0) {
     rawSum += fhWeight;
-    breakdown.push({ factor: 'Family History', contribution: fhWeight, note: fhWeight >= 20 ? 'Both parent and sibling with T2D' : fhWeight >= 15 ? 'First-degree T2D' : fhWeight >= 10 ? 'First-degree T1D' : 'Second-degree relative' });
+    breakdown.push({ factor: 'Family History', contribution: fhWeight, note: 'First-degree relative with Type 2 Diabetes' });
   }
 
   // Activity deficit (Stricter: max 25 pts)

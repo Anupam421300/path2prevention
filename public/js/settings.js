@@ -104,17 +104,6 @@ function buildSettingsHTML(profile, settings, program) {
     }
       </div>
 
-      <!-- App Settings -->
-      <div class="card" style="padding:26px;">
-        <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">App Settings</h3>
-        <div>
-          <p style="font-size: 16px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#6c7a71;margin-bottom:12px;">Theme</p>
-          <div style="display:flex;gap:8px;">
-            <button class="pill ${!settings?.theme || settings?.theme === 'light' ? 'pill-green' : 'pill-gray'}" onclick="setTheme('light')">☀️ Light</button>
-            <button class="pill ${settings?.theme === 'dark' ? 'pill-green' : 'pill-gray'}" onclick="setTheme('dark')">🌙 Dark</button>
-          </div>
-        </div>
-      </div>
 
       <!-- 30-day Challenge -->
       <div class="card" style="padding:26px;">
@@ -141,13 +130,13 @@ function buildSettingsHTML(profile, settings, program) {
       </div>
 
       <!-- Data Export -->
-      <div class="card" style="padding:26px;">
+      <div class="card" style="grid-column:span 2;padding:26px;">
         <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">Export My Data</h3>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <button onclick="downloadCSV()" class="btn btn-secondary btn-sm" style="width:100%;">
+        <div style="display:flex;gap:16px;">
+          <button onclick="downloadCSV()" class="btn btn-secondary btn-sm" style="flex:1;">
             <span class="material-symbols-outlined" style="font-size: 20px;">download</span> Download CSV
           </button>
-          <button onclick="downloadPDF()" class="btn btn-secondary btn-sm" style="width:100%;">
+          <button onclick="downloadPDF()" class="btn btn-secondary btn-sm" style="flex:1;">
             <span class="material-symbols-outlined" style="font-size: 20px;">picture_as_pdf</span> Download PDF Report
           </button>
         </div>
@@ -213,14 +202,6 @@ async function saveSettings() {
   } catch { }
 }
 
-async function setTheme(theme) {
-  try {
-    await api.put('/settings', { theme });
-    document.querySelectorAll('[onclick*="setTheme"]').forEach(el => {
-      el.className = `pill ${el.textContent.includes(theme === 'dark' ? '🌙' : '☀️') ? 'pill-green' : 'pill-gray'}`;
-    });
-  } catch { }
-}
 
 async function downloadCSV() {
   try {
@@ -239,12 +220,20 @@ async function downloadPDF() {
   try {
     showToast('Generating your PDF report…', 'info');
     const res = await apiFetch('/export/pdf');
-    if (!res || !res.blob) { showToast('Report generation failed — no data returned.', 'error'); return; }
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'path2prevention-report.pdf'; a.click();
-    URL.revokeObjectURL(url);
-    showToast('Report downloaded successfully!', 'success');
+    if (!res) { showToast('Report generation failed — no data returned.', 'error'); return; }
+
+    const htmlText = await res.text();
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      showToast('Popup blocked. Please allow popups for this site.', 'error');
+      return;
+    }
+
+    printWindow.document.open();
+    printWindow.document.write(htmlText);
+    printWindow.document.close();
+
+    showToast('Report opened! You can now print/save it as PDF.', 'success');
   } catch (err) { showToast(err.message || 'Could not generate report.', 'error'); }
 }
 
