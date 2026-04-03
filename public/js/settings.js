@@ -32,10 +32,10 @@ function buildSettingsHTML(profile, settings, program) {
       <p style="font-size: 17px;color:#6c7a71;">Manage your profile, preferences, and data.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="set-bento-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
       <!-- Profile Card -->
-      <div class="card" style="padding:30px;grid-column:span 2;">
+      <div class="card set-card-span-2" style="padding:30px;grid-column:span 2;">
         <div style="display:flex;align-items:center;gap:20px;margin-bottom:30px;flex-wrap:wrap;">
           <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#006c49,#10b981);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:white;flex-shrink:0;">${initials}</div>
           <div>
@@ -44,7 +44,7 @@ function buildSettingsHTML(profile, settings, program) {
           </div>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
+        <div class="set-mobile-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
           <div class="input-group" style="margin-bottom:0; grid-column: span 2;">
             <label>Email</label>
             <input class="input-field" type="email" value="${escapeHTML(profile.email || '')}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
@@ -130,13 +130,13 @@ function buildSettingsHTML(profile, settings, program) {
       </div>
 
       <!-- Data Export -->
-      <div class="card" style="grid-column:span 2;padding:26px;">
+      <div class="card set-card-span-2" style="grid-column:span 2;padding:26px;">
         <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">Export My Data</h3>
-        <div style="display:flex;gap:16px;">
-          <button onclick="downloadCSV()" class="btn btn-secondary btn-sm" style="flex:1;">
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <button onclick="downloadCSV()" class="btn btn-secondary btn-sm" style="flex:1;min-width:200px;">
             <span class="material-symbols-outlined" style="font-size: 20px;">download</span> Download CSV
           </button>
-          <button onclick="downloadPDF()" class="btn btn-secondary btn-sm" style="flex:1;">
+          <button onclick="downloadPDF()" class="btn btn-secondary btn-sm" style="flex:1;min-width:200px;">
             <span class="material-symbols-outlined" style="font-size: 20px;">picture_as_pdf</span> Download PDF Report
           </button>
         </div>
@@ -144,9 +144,9 @@ function buildSettingsHTML(profile, settings, program) {
       </div>
 
       <!-- Security -->
-      <div class="card" style="padding:26px; grid-column: span 2;">
+      <div class="card set-card-span-2" style="padding:26px; grid-column: span 2;">
         <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">Security</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div class="set-mobile-col" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
           <div>
             <div class="input-group">
               <label>Current password</label>
@@ -164,6 +164,13 @@ function buildSettingsHTML(profile, settings, program) {
             <button onclick="confirmDeleteAccount()" class="btn btn-danger btn-sm" style="width:100%;margin-top:auto;">Delete my account</button>
           </div>
         </div>
+      </div>
+
+      <!-- Mobile Sign Out Button -->
+      <div class="card set-card-span-2 hide-on-desktop" style="display: flex; justify-content: center; padding: 16px;">
+        <button onclick="logout()" class="btn btn-secondary btn-full" style="color: #ba1a1a; border-color: rgba(186, 26, 26, 0.3);">
+          <span class="material-symbols-outlined">logout</span> Sign out securely
+        </button>
       </div>
 
     </div>

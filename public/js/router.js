@@ -1,13 +1,15 @@
 // Path2Prevention — Router & App Init
 
-function switchTab(tab, event) {
+let tabCache = {};
+
+function switchTab(tab, event, forceRefresh = false) {
   if (event) event.preventDefault();
   state.currentTab = tab;
 
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.getElementById(`tab-${tab}`).classList.add('active');
 
-  document.querySelectorAll('.slidebar-link').forEach(el =>
+  document.querySelectorAll('.slidebar-link, .mobile-nav-item').forEach(el =>
     el.classList.toggle('active', el.dataset.tab === tab));
     
   // Auto-close slidebar upon selection
@@ -18,14 +20,23 @@ function switchTab(tab, event) {
     slidebar.classList.remove('open');
   }
 
-  if (tab === 'dashboard') loadDashboard();
-  else if (tab === 'log') loadLogForm();
-  else if (tab === 'insights') loadInsights();
-  else if (tab === 'settings') loadSettings();
+  if (!tabCache[tab] || forceRefresh) {
+    tabCache[tab] = true;
+    if (tab === 'dashboard') loadDashboard();
+    else if (tab === 'log') loadLogForm();
+    else if (tab === 'insights') loadInsights();
+    else if (tab === 'settings') loadSettings();
+  }
 }
 
-// Wire slidebar nav clicks
-document.querySelectorAll('.slidebar-link').forEach(el => {
+// Helper to flush cache when data changes (e.g. after logging)
+window.forceTabRefresh = function(tabName) {
+  tabCache[tabName] = false;
+  if (state.currentTab === tabName) switchTab(tabName, null, true);
+};
+
+// Wire nav clicks for desktop and mobile
+document.querySelectorAll('.slidebar-link, .mobile-nav-item').forEach(el => {
   el.addEventListener('click', (e) => {
     e.preventDefault();
     const tab = el.dataset.tab;
@@ -51,7 +62,18 @@ async function initApp() {
       return;
     }
 
-    loadDashboard();
+    // Load initial tab
+    switchTab('dashboard');
+
+    // Eagerly preload remaining tabs in the background after a slight delay
+    // This warms up Vercel serverless functions and pre-renders the DOM,
+    // making standard tab switching completely instantaneous for the user.
+    setTimeout(() => {
+      if (!tabCache['log']) { tabCache['log'] = true; loadLogForm(); }
+      if (!tabCache['insights']) { tabCache['insights'] = true; loadInsights(); }
+      if (!tabCache['settings']) { tabCache['settings'] = true; loadSettings(); }
+    }, 500);
+
   } catch (err) {
     console.error('Init failed:', err);
     logout();

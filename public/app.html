@@ -14,6 +14,7 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/mobile.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <link rel="manifest" href="/manifest.json">
   <style>
@@ -285,6 +286,32 @@
 
   <!-- ════════ APP SHELL ════════ -->
   <div class="app-shell" id="appShell">
+
+    <!-- Mobile Top Bar (Visible only <= 768px) -->
+    <header class="mobile-top-bar">
+      <img src="/images/logo!.jpeg" alt="Logo" style="width: 34px; height: 34px; border-radius: 8px; margin-right: 12px; object-fit: contain;">
+      <div class="brand-text">Path2Prevention</div>
+    </header>
+
+    <!-- Mobile Bottom Navigation (Visible only <= 768px) -->
+    <nav class="mobile-bottom-nav">
+      <a href="#" class="mobile-nav-item active" data-tab="dashboard" id="mob-nav-dashboard">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="mobile-nav-item" data-tab="log" id="mob-nav-log">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Log Today</span>
+      </a>
+      <a href="#" class="mobile-nav-item" data-tab="insights" id="mob-nav-insights">
+        <span class="material-symbols-outlined">bar_chart</span>
+        <span>Insights</span>
+      </a>
+      <a href="#" class="mobile-nav-item" data-tab="settings" id="mob-nav-settings">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Settings</span>
+      </a>
+    </nav>
 
     <!-- Static Sidebar -->
     <aside class="slidebar" id="slidebar">

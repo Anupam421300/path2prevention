@@ -98,10 +98,10 @@ function buildDashboardHTML(data) {
     </div>` : ''}
 
     <!-- Bento Grid -->
-    <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:16px;">
+    <div class="dash-bento-grid" style="display:grid;grid-template-columns:repeat(12,1fr);gap:16px;">
 
       <!-- Risk Score Card -->
-      <div class="card" style="grid-column:span 5;padding:30px;text-align:center;position:relative;">
+      <div class="card dash-card-span-5" style="grid-column:span 5;padding:30px;text-align:center;position:relative;">
         ${isNewUser ? `
           <!-- New user — no real score yet -->
           <div style="padding:10px 0 6px;">
@@ -137,7 +137,7 @@ function buildDashboardHTML(data) {
       </div>
 
       <!-- Goals Card -->
-      <div class="card" style="grid-column:span 7;padding:26px;">
+      <div class="card dash-card-span-7" style="grid-column:span 7;padding:26px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
           <h3 style="font-size: 19px;font-weight:700;">This Week's Goals</h3>
           <span style="font-size: 16px;color:#6c7a71;">${metrics?.daysLogged7d || 0}/7 days logged</span>
@@ -153,7 +153,7 @@ function buildDashboardHTML(data) {
 
       <!-- Safety Alert Card (replaces recs when safety override) -->
       ${isSafetyAlert ? `
-      <div class="card" style="grid-column:span 12;padding:22px;border:2px solid #EF4444;background:#FEF2F2;">
+      <div class="card dash-card-span-12" style="grid-column:span 12;padding:22px;border:2px solid #EF4444;background:#FEF2F2;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
           <span class="material-symbols-outlined" style="color:#EF4444;font-size:26px;">warning</span>
           <span style="font-weight:700;font-size: 20px;color:#991B1B;">Important — Please See a Doctor</span>
@@ -165,7 +165,7 @@ function buildDashboardHTML(data) {
       </div>` : `
 
       <!-- Streak Card -->
-      <div class="card" style="grid-column:span 4;padding:26px;">
+      <div class="card dash-card-span-4" style="grid-column:span 4;padding:26px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
           <div>
             <span style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6c7a71;">Current Streak</span>
@@ -185,7 +185,7 @@ function buildDashboardHTML(data) {
       </div>
 
       <!-- Trajectory Card -->
-      <div class="card" style="grid-column:span 4;padding:26px;">
+      <div class="card dash-card-span-4" style="grid-column:span 4;padding:26px;">
         <span style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6c7a71;display:block;margin-bottom:14px;">Risk Trajectory</span>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <span class="material-symbols-outlined" style="font-size: 26px;color:${trajectory?.direction === 'improving' ? '#006c49' : trajectory?.direction === 'worsening' ? '#ba1a1a' : '#f59e0b'};">
@@ -197,7 +197,7 @@ function buildDashboardHTML(data) {
       </div>
 
       <!-- Focus Areas (top 2 recs) -->
-      <div class="card" style="grid-column:span 4;padding:26px;">
+      <div class="card dash-card-span-4" style="grid-column:span 4;padding:26px;">
         <span style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#6c7a71;display:block;margin-bottom:16px;">Top Focus Areas</span>
         ${recs.length ? recs.map((r, i) => `
           <div style="padding:14px;border-radius:12px;background:#f8f9fa;margin-bottom:10px;border-left:3px solid ${i === 0 ? '#ba1a1a' : '#f59e0b'};">
@@ -211,7 +211,7 @@ function buildDashboardHTML(data) {
       </div>`}
 
       <!-- 7-Day Trends — 4 Chart Grid -->
-      <div style="grid-column:span 8;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="dash-chart-grid" style="grid-column:span 8;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div class="card" style="padding:22px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
             <div style="display:flex;align-items:center;gap:8px;">

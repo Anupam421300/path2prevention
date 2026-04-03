@@ -63,7 +63,7 @@ function buildLogHTML(log) {
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="log-bento-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
       <!-- Movement Card -->
       <div class="card" style="padding:26px;">
@@ -102,7 +102,7 @@ function buildLogHTML(log) {
           </button>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;">
+        <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;">
           <div class="input-group" style="margin-bottom:0;">
             <label>Weight (kg)</label>
             <input class="input-field" type="number" id="weightInput" placeholder="e.g. 72.5" min="20" max="300" step="0.1" value="${log.weightKg || ''}">
@@ -139,10 +139,10 @@ function buildLogHTML(log) {
           </style>
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+        <div class="log-mobile-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
           <div class="input-group" style="margin-bottom:0;">
             <label>Sugary drinks today</label>
-          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Sweet chai, sweet lassi, soft drink, packaged juice, Rooh Afza, sharbat, cold coffee with sugar, milkshake, energy drink — anything with added sugar</p>
+          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Sweet chai, soft drink, packaged juice, etc.</p>
             <div class="counter-input" style="justify-content:center;">
               <button class="counter-btn" onclick="adjustCounter('sugaryVal', -1)">−</button>
               <span class="counter-value" id="sugaryValDisplay">${sugary}</span>
@@ -151,8 +151,8 @@ function buildLogHTML(log) {
             </div>
           </div>
           <div class="input-group" style="margin-bottom:0;">
-            <label>Fried / processed food</label>
-          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Samosa, puri, bhatura, pakora, chips, namkeen, burger, pizza, fried snacks, any takeout</p>
+            <label>Fried / processed</label>
+          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Samosa, chips, burger, pizza, takeout</p>
             <div class="counter-input" style="justify-content:center;">
               <button class="counter-btn" onclick="adjustCounter('fastFoodVal', -1)">−</button>
               <span class="counter-value" id="fastFoodValDisplay">${fastFood}</span>
@@ -212,7 +212,7 @@ function buildLogHTML(log) {
 
         <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(187,202,191,0.2);">
           <p style="font-size: 16px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#6c7a71;margin-bottom:14px;">Lab Values (optional)</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="input-group" style="margin-bottom:0;">
               <label>Fasting Glucose (mg/dL)</label>
               <input class="input-field" type="number" id="glucoseInput" placeholder="e.g. 95" min="50" max="400" value="${glucose}">
@@ -229,7 +229,7 @@ function buildLogHTML(log) {
     </div>
 
     <!-- Save Button -->
-    <div style="position:sticky;bottom:0;background:rgba(248,249,250,0.9);backdrop-filter:blur(12px);padding:18px 0;margin-top:22px;border-top:1px solid rgba(187,202,191,0.15);">
+    <div class="log-save-sticky" style="position:sticky;bottom:0;background:rgba(248,249,250,0.9);backdrop-filter:blur(12px);padding:18px 0;margin-top:22px;border-top:1px solid rgba(187,202,191,0.15);z-index:100;">
       <button id="saveLogBtn" onclick="saveLog()" class="btn btn-primary btn-full" style="max-width:400px;margin:0 auto;display:flex;">
         <span class="material-symbols-outlined" style="font-size: 22px;">save</span> Save today's log
       </button>
@@ -384,8 +384,13 @@ async function saveLog() {
     // Show locked state
     showLockedState(payload);
 
-    // Refresh dashboard data in background
-    setTimeout(() => { if (typeof loadDashboard === 'function') loadDashboard(); }, 1500);
+    // Refresh dashboard and insights cache
+    if (typeof window.forceTabRefresh === 'function') {
+      window.forceTabRefresh('dashboard');
+      window.forceTabRefresh('insights');
+    } else {
+      setTimeout(() => { if (typeof loadDashboard === 'function') loadDashboard(); }, 1500);
+    }
 
   } catch (err) {
     // Handle log already locked

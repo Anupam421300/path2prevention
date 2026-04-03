@@ -72,10 +72,10 @@ function buildInsightsHTML(analytics, correlations, recs) {
       <p style="font-size: 17px;color:#6c7a71;">Trends, correlations, and personalised recommendations.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="ins-bento-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
       <!-- Chart Card (col 1-2 full width) -->
-      <div class="card" style="grid-column:span 2;padding:26px;">
+      <div class="card ins-card-span-2" style="grid-column:span 2;padding:26px;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
           <div style="display:flex;gap:6px;overflow-x:auto;flex-wrap:wrap;">${catButtons}</div>
           <div style="display:flex;gap:6px;">${periodButtons}</div>
@@ -113,7 +113,7 @@ function buildInsightsHTML(analytics, correlations, recs) {
       </div>
 
       <!-- Recommendations (full width) -->
-      <div class="card" style="grid-column:span 2;padding:26px;">
+      <div class="card ins-card-span-2" style="grid-column:span 2;padding:26px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
           <h3 style="font-size: 19px;font-weight:700;">My Recommendations</h3>
           <div style="display:flex;gap:4px;" id="recTabs">

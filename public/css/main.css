@@ -2101,3 +2101,10 @@ textarea {
     transform: rotate(360deg);
   }
 }
+
+/* ── Responsive Utilities ── */
+@media screen and (min-width: 769px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
