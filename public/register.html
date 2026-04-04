@@ -68,6 +68,31 @@
       box-shadow: 0 6px 16px rgba(16,185,129,0.4), 0 0 20px rgba(16,185,129,0.15);
     }
     .auth-left-logo .material-symbols-outlined { font-size:26px; color: white; }
+
+    /* Modal styles */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(25, 28, 29, 0.45); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px; opacity: 0; transition: opacity 0.2s ease;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .modal-backdrop.hidden { display: none; pointer-events: none; }
+    .modal-card {
+      background: #ffffff; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(25, 28, 29, 0.1), 0 8px 20px rgba(25, 28, 29, 0.06);
+      width: 100%; max-width: 520px; overflow: hidden;
+      transform: scale(0.94); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .modal-backdrop.open .modal-card { transform: scale(1); }
+
+    /* Mobile Modal Overrides */
+    @media (max-width: 600px) {
+      .modal-content-wrapper { padding: 22px !important; border-radius: 16px !important; box-sizing: border-box; }
+      .modal-content-wrapper h2 { font-size: 20px !important; }
+      .modal-scroll-area { max-height: 75vh !important; padding-right: 8px !important; font-size: 14.5px !important; }
+      .modal-backdrop { padding: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -162,7 +187,7 @@
           <div class="checkbox-wrap">
             <input type="checkbox" id="termsCheck" required>
             <label for="termsCheck">
-              I agree to the <a href="#" style="color:#006c49;font-weight:600;">Terms of Service</a> and <a href="#" style="color:#006c49;font-weight:600;">Privacy Policy</a>. I understand this app is not a substitute for medical advice.
+              I agree to the <a href="#" onclick="openAuthModal('termsModalBackdrop', event)" style="color:#006c49;font-weight:600;">Terms of Service</a> and <a href="#" onclick="openAuthModal('privacyModalBackdrop', event)" style="color:#006c49;font-weight:600;">Privacy Policy</a>. I understand this app is not a substitute for medical advice.
             </label>
           </div>
 
@@ -271,6 +296,62 @@
     if (localStorage.getItem('p2p_token')) {
       window.location.href = '/app';
     }
+
+    function openAuthModal(id, e) {
+      if (e) e.preventDefault();
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => el.classList.add('open'), 10);
+    }
+    
+    function closeAuthModal(id, e) {
+      if (e) {
+         e.preventDefault();
+         e.stopPropagation();
+      }
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => el.classList.add('hidden'), 250);
+    }
   </script>
+
+  <!-- Modals -->
+  <div id="termsModalBackdrop" class="modal-backdrop hidden" onclick="closeAuthModal('termsModalBackdrop', event)">
+    <div class="modal-card modal-content-wrapper" style="box-sizing: border-box; max-width: 600px; padding: 30px; border-radius: 20px; text-align: left;" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: #191c1d; margin: 0;">Terms of Service</h2>
+        <button onclick="closeAuthModal('termsModalBackdrop')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6c7a71; padding: 0;"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-scroll-area" style="max-height: 60vh; overflow-y: auto; padding-right: 15px; font-size: 16px; color: #3c4a42; line-height: 1.6;">
+        <p style="margin-bottom: 12px;"><strong>1. System Overview:</strong> Path2Prevention is a comprehensive health telemetry and diabetes risk prevention platform. It aggregates your daily lifestyle inputs (sleep, steps, water intake, dietary signals, and physical activity) and body measurements to compute a relative Type 2 Diabetes risk index.</p>
+        <p style="margin-bottom: 12px;"><strong>2. Core Functionality:</strong> The system utilizes clinically-backed rule engines (including IDF heuristics and ADA guidelines) to calculate a 0-100 risk score and plot risk trajectories. It provides dynamic goal setting (e.g., calibrating weekly activity minutes based on family history), evidence-based health recommendations, and lifestyle pattern correlations (e.g., linking your sleep data directly to stress levels).</p>
+        <p style="margin-bottom: 12px;"><strong>3. Strictly Educational Use:</strong> <b style="color: #93000a;">Path2Prevention is strictly a self-management educational tool. It does NOT provide medical diagnoses, treatment plans, or professional medical advice. While our engine alerts you if inputted lab values (like HbA1c or Fasting Glucose) enter hazardous ranges, you must always consult a qualified healthcare provider for clinical assessments.</b></p>
+        <p style="margin-bottom: 12px;"><strong>4. User Data Responsibility:</strong> Your risk score, active recommendations, and 30-Day Challenge progression rely entirely on the accuracy of the health snapshots you log. You are responsible for ensuring that inputs like your baseline weight, clinical labs, and genetic risk factors are accurate, as these heavily dictate your personalized algorithms.</p>
+        <p style="margin-bottom: 12px;"><strong>5. System Availability and Liability:</strong> To the maximum extent permitted by law, Path2Prevention will not be liable for direct or indirect health consequences resulting from the interpretation of our algorithmic outputs, recommendation generation, or temporary system outages.</p>
+      </div>
+      <button onclick="closeAuthModal('termsModalBackdrop')" class="btn btn-primary" style="margin-top: 24px; width: 100%;">I Understand</button>
+    </div>
+  </div>
+
+  <div id="privacyModalBackdrop" class="modal-backdrop hidden" onclick="closeAuthModal('privacyModalBackdrop', event)">
+    <div class="modal-card modal-content-wrapper" style="box-sizing: border-box; max-width: 600px; padding: 30px; border-radius: 20px; text-align: left;" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; color: #191c1d; margin: 0;">Privacy Policy</h2>
+        <button onclick="closeAuthModal('privacyModalBackdrop')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6c7a71; padding: 0;"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="modal-scroll-area" style="max-height: 60vh; overflow-y: auto; padding-right: 15px; font-size: 16px; color: #3c4a42; line-height: 1.6;">
+        <p style="margin-bottom: 12px;"><strong>1. Comprehensive Data Collection:</strong> We collect and process an extensive range of personal health telemetry to power your dashboard. This includes your profile baseline (age, sex, height, baseline weight), optional clinical labs (HbA1c, Fasting Glucose), genetic risk factors (first-degree T2D relatives), and granular daily logs (sedentary hours, dietary breakdown, sleep metrics, and stress intervals).</p>
+        <p style="margin-bottom: 12px;"><strong>2. Precision Data Usage:</strong> Your data is solely used to drive the Path2Prevention analytical engine. It evaluates your 0-100 risk score, surfaces precision interventions from our evidence datastore, manages your daily streak tracking, and computes statistical Pearson correlations across your logs to reveal hidden physiological patterns.</p>
+        <p style="margin-bottom: 12px;"><strong>3. Secure Storage and Constraints:</strong> All sensitive health metrics are stored securely within our encrypted database collections. Your daily logs are structurally locked after submission to ensure absolute algorithmic integrity when calculating your historical risk trajectory.</p>
+        <p style="margin-bottom: 12px;"><strong>4. Anonymized Algorithm Tuning:</strong> We may utilize thoroughly anonymized, stripped aggregate data to fine-tune our global risk detection models, adjust threshold penalties (like BMI action points), and improve the baseline accuracy of our predictive system. We absolutely never sell your recognizable health data to third parties.</p>
+        <p style="margin-bottom: 12px;"><strong>5. Complete Archival Deletion:</strong> You have the absolute right to request permanent deletion of your account. This action instantly and permanently purges your Profile, Daily Logs, Risk Scores, Active Recommendations, and Correlation Snapshots from our server architecture.</p>
+      </div>
+      <button onclick="closeAuthModal('privacyModalBackdrop')" class="btn btn-primary" style="margin-top: 24px; width: 100%;">Close</button>
+    </div>
+  </div>
 </body>
 </html>
