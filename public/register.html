@@ -311,11 +311,11 @@
         <button onclick="closeAuthModal('termsModalBackdrop')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6c7a71; padding: 0;"><span class="material-symbols-outlined">close</span></button>
       </div>
       <div class="modal-scroll-area" style="max-height: 60vh; overflow-y: auto; padding-right: 15px; font-size: 16px; color: #3c4a42; line-height: 1.6;">
-        <p style="margin-bottom: 12px;"><strong>1. System Overview:</strong> Path2Prevention is a comprehensive health telemetry and diabetes risk prevention platform. It aggregates your daily lifestyle inputs (sleep, steps, water intake, dietary signals, and physical activity) and body measurements to compute a relative Type 2 Diabetes risk index.</p>
-        <p style="margin-bottom: 12px;"><strong>2. Core Functionality:</strong> The system utilizes clinically-backed rule engines (including IDF heuristics and ADA guidelines) to calculate a 0-100 risk score and plot risk trajectories. It provides dynamic goal setting (e.g., calibrating weekly activity minutes based on family history), evidence-based health recommendations, and lifestyle pattern correlations (e.g., linking your sleep data directly to stress levels).</p>
-        <p style="margin-bottom: 12px;"><strong>3. Strictly Educational Use:</strong> <b style="color: #93000a;">Path2Prevention is strictly a self-management educational tool. It does NOT provide medical diagnoses, treatment plans, or professional medical advice. While our engine alerts you if inputted lab values (like HbA1c or Fasting Glucose) enter hazardous ranges, you must always consult a qualified healthcare provider for clinical assessments.</b></p>
-        <p style="margin-bottom: 12px;"><strong>4. User Data Responsibility:</strong> Your risk score, active recommendations, and 30-Day Challenge progression rely entirely on the accuracy of the health snapshots you log. You are responsible for ensuring that inputs like your baseline weight, clinical labs, and genetic risk factors are accurate, as these heavily dictate your personalized algorithms.</p>
-        <p style="margin-bottom: 12px;"><strong>5. System Availability and Liability:</strong> To the maximum extent permitted by law, Path2Prevention will not be liable for direct or indirect health consequences resulting from the interpretation of our algorithmic outputs, recommendation generation, or temporary system outages.</p>
+        <p style="margin-bottom: 12px;"><strong>1. What Path2Prevention does</strong><br>Path2Prevention helps you log lifestyle signals, view a personalised diabetes risk score, and receive evidence-based self-management guidance.</p>
+        <p style="margin-bottom: 12px;"><strong>2. Educational use only</strong><br>Path2Prevention is not a medical device, not a diagnostic service, and not a substitute for professional medical advice, diagnosis, or treatment.</p>
+        <p style="margin-bottom: 12px;"><strong>3. Your inputs matter</strong><br>Your risk score and recommendations depend on the accuracy of the information you provide, including lifestyle logs, body measurements, family history, and optional lab values.</p>
+        <p style="margin-bottom: 12px;"><strong>4. Clinical safety</strong><br>If your self-reported lab values fall into diabetes-range thresholds, Path2Prevention may surface a safety alert encouraging you to consult a qualified healthcare professional.</p>
+        <p style="margin-bottom: 12px;"><strong>5. Account and data</strong><br>You may delete your account, which permanently removes associated user data from the platform.</p>
       </div>
       <button onclick="closeAuthModal('termsModalBackdrop')" class="btn btn-primary" style="margin-top: 24px; width: 100%;">I Understand</button>
     </div>
@@ -327,13 +327,17 @@
         <h2 style="font-size: 24px; font-weight: 800; color: #191c1d; margin: 0;">Privacy Policy</h2>
         <button onclick="closeAuthModal('privacyModalBackdrop')" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #6c7a71; padding: 0;"><span class="material-symbols-outlined">close</span></button>
       </div>
-      <div class="modal-scroll-area" style="max-height: 60vh; overflow-y: auto; padding-right: 15px; font-size: 16px; color: #3c4a42; line-height: 1.6;">
-        <p style="margin-bottom: 12px;"><strong>1. Comprehensive Data Collection:</strong> We collect and process an extensive range of personal health telemetry to power your dashboard. This includes your profile baseline (age, sex, height, baseline weight), optional clinical labs (HbA1c, Fasting Glucose), genetic risk factors (first-degree T2D relatives), and granular daily logs (sedentary hours, dietary breakdown, sleep metrics, and stress intervals).</p>
-        <p style="margin-bottom: 12px;"><strong>2. Precision Data Usage:</strong> Your data is solely used to drive the Path2Prevention analytical engine. It evaluates your 0-100 risk score, surfaces precision interventions from our evidence datastore, manages your daily streak tracking, and computes statistical Pearson correlations across your logs to reveal hidden physiological patterns.</p>
-        <p style="margin-bottom: 12px;"><strong>3. Secure Storage and Constraints:</strong> All sensitive health metrics are stored securely within our encrypted database collections. Your daily logs are structurally locked after submission to ensure absolute algorithmic integrity when calculating your historical risk trajectory.</p>
-        <p style="margin-bottom: 12px;"><strong>4. Anonymized Algorithm Tuning:</strong> We may utilize thoroughly anonymized, stripped aggregate data to fine-tune our global risk detection models, adjust threshold penalties (like BMI action points), and improve the baseline accuracy of our predictive system. We absolutely never sell your recognizable health data to third parties.</p>
-        <p style="margin-bottom: 12px;"><strong>5. Complete Archival Deletion:</strong> You have the absolute right to request permanent deletion of your account. This action instantly and permanently purges your Profile, Daily Logs, Risk Scores, Active Recommendations, and Correlation Snapshots from our server architecture.</p>
-      </div>
+      <div class="modal-scroll-area" style="max-height: 60vh; overflow-y: auto; padding-right: 15px; font-size: 16px; color: #3c4a42; line-height: 1.6; white-space: pre-wrap;">1. Data we collect
+We collect the information you choose to provide, such as profile details, family history, lifestyle logs, body measurements, and optional lab values.
+
+2. Why we use it
+Your data is used to compute your personalised risk score, generate evidence-based recommendations, show trends and correlations, and support progress tracking inside the app.
+
+3. Security protections
+Path2Prevention uses secure authentication and backend protections designed to reduce unauthorized access and common web attack risks.
+
+4. Your control
+You can request account deletion. When your account is deleted, associated user data is permanently removed from the platform.</div>
       <button onclick="closeAuthModal('privacyModalBackdrop')" class="btn btn-primary" style="margin-top: 24px; width: 100%;">Close</button>
     </div>
   </div>
