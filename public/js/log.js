@@ -397,6 +397,11 @@ async function saveLog() {
     if (err.code === 'LOG_LOCKED') {
       showToast('Today already logged — see you tomorrow! 🌟', 'info');
       showLockedState(todayLogData);
+      // Still refresh dashboard so any previously saved data is visible
+      if (typeof window.forceTabRefresh === 'function') {
+        window.forceTabRefresh('dashboard');
+        window.forceTabRefresh('insights');
+      }
       return;
     }
     showToast(err.message || 'Save failed. Please try again.', 'error');

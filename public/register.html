@@ -18,24 +18,16 @@
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-    .social-proof {
-      display: flex; flex-direction: column; gap: 12px;
-      width: 100%; max-width: 340px;
+    .auth-benefit-item {
+      display: flex; align-items: center; gap: 10px;
+      padding:12px 16px; background: rgba(255,255,255,0.08);
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
+      font-size: 18px; color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
     }
-    .testimonial-card {
-      padding:18px; background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px; backdrop-filter: blur(8px);
+    .auth-benefit-item .material-symbols-outlined {
+      font-size: 22px; color: #4edea3;
     }
-    .testimonial-card .quote { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.5; margin-bottom:12px; }
-    .testimonial-card .author { display: flex; align-items: center; gap: 8px; }
-    .author-avatar {
-      width: 30px; height: 30px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 700; color: #006c49;
-    }
-    .author-name { font-size: 17px; font-weight: 600; color: white; }
-    .author-detail { font-size: 15px; color: rgba(255,255,255,0.5); }
     .input-icon-wrap { position: relative; }
     .input-icon-wrap .material-symbols-outlined {
       position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
@@ -101,32 +93,24 @@
     <div class="auth-left">
       <div class="auth-brand" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
         <img src="/images/logo!.jpeg" alt="Path2Prevention Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); background: white;">
-        <h1 style="font-size:30px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px;">Start your journey</h1>
+        <h1 style="font-size:30px;font-weight:800;margin-bottom:8px;letter-spacing:-0.5px;max-width:320px;line-height:1.2;">Create your Path2Prevention account</h1>
         <p style="font-size: 18px;opacity:0.65;margin-bottom:30px;max-width:300px;line-height:1.6;">
-          Thousands are already reducing their diabetes risk with personalised, clinically-grounded guidance.
+          Start with a transparent view of your diabetes risk.
         </p>
       </div>
 
-      <div class="social-proof">
-        <div class="testimonial-card">
-          <p class="quote">"Reduced my HbA1c from 6.1% to 5.6% in 3 months by following the recommendations."</p>
-          <div class="author">
-            <div class="author-avatar" style="background:#a6f2d1;">R</div>
-            <div>
-              <div class="author-name">Rohan M.</div>
-              <div class="author-detail">Risk reduced from High → Medium</div>
-            </div>
-          </div>
+      <div class="auth-features" style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;margin-bottom:38px;">
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">insights</span>
+          Track sleep, steps, diet, stress, and daily patterns.
         </div>
-        <div class="testimonial-card">
-          <p class="quote">"The what-if simulator showed me exactly how 20 extra minutes of walking would change my score."</p>
-          <div class="author">
-            <div class="author-avatar" style="background:#6ffbbe;">P</div>
-            <div>
-              <div class="author-name">Priya S.</div>
-              <div class="author-detail">14-day streak maintained</div>
-            </div>
-          </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">verified_user</span>
+          Receive personalised, evidence-cited guidance.
+        </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">flag</span>
+          Begin your prevention journey today.
         </div>
       </div>
     </div>

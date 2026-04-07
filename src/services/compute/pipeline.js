@@ -1,5 +1,6 @@
 'use strict';
-const { Profile, DailyLog, WeeklyMeasure, RiskScore, Recommendation, Goal, StreakRecord, CorrelationSnapshot, RiskTrajectory, RuleVersion, Tip } = require('../../models');
+const { Profile, DailyLog, WeeklyMeasure, RiskScore, Recommendation, Goal, StreakRecord, CorrelationSnapshot, RiskTrajectory, Tip } = require('../../models');
+const { RULES } = require('../../data/seedData');
 const { getTodayString, addDays, daysDiff, getWeekStart, avg, sum, stdDev, computeBMI, pearsonR, scoreToGrade, getGreeting, getDayOfYear } = require('../../utils');
 
 // ═══════════ Step 1: normalizeInputs ═══════════
@@ -188,29 +189,6 @@ function computeRiskIndex(metrics, fhWeight, profile) {
     breakdown.push({ factor: 'Lab Indicators', contribution: labPts, note: 'Glucose/HbA1c values are in clinical risk ranges.' });
   }
 
-  // --- ROOT CAUSE PATTERN CO-RELATION (Rule Engine Base) ---
-  let patternPts = 0;
-
-  // Pattern 1: High Stress + Poor Sleep = Cortisol overload & insulin resistance
-  if (metrics.avgStressScore7d > 3.5 && metrics.avgSleepHours7d < 6.5 && metrics.avgSleepHours7d > 0) {
-    const p1 = 15; patternPts += p1;
-    breakdown.push({ factor: 'Pattern: Stress & Sleep', contribution: p1, note: 'High stress + lack of sleep causes compounding insulin resistance.' });
-  }
-
-  // Pattern 2: Highly Sedentary + Zero Activity = Complete metabolic slowdown
-  if (metrics.avgSedentaryHours7d > 9 && metrics.moderateEqMin7d < 30) {
-    const p2 = 15; patternPts += p2;
-    breakdown.push({ factor: 'Pattern: Extreme Sedentary', contribution: p2, note: 'High sitting + very low activity drastically reduces glucose uptake.' });
-  }
-
-  // Pattern 3: Poor Diet + Sugary Drinks = Blood sugar spikes
-  if (metrics.sugaryDrinks7d > 5 && metrics.fastFood7d > 3) {
-    const p3 = 15; patternPts += p3;
-    breakdown.push({ factor: 'Pattern: Toxic Diet', contribution: p3, note: 'High sugar + high fast food severely impacts liver function.' });
-  }
-  
-  rawSum += patternPts;
-
   // South Asian BMI thresholds (lower than Western):
   // IDF/WHO recommend 23 as the action point for South/East Asian populations
   const BMI_ACTION_POINT = 23; // not 25
@@ -235,11 +213,8 @@ function mapToMeter(score) {
 
 // ═══════════ Step 6: buildRecommendations ═══════════
 async function buildRecommendations(facts, metrics, familyHistory, userId) {
-  const ruleDoc = await RuleVersion.findOne({ active: true });
-  if (!ruleDoc) return [];
-
-  const rules = ruleDoc.baseRules || [];
-  const fhMods = ruleDoc.familyHistoryModifiers || {};
+  const rules = RULES.baseRules || [];
+  const fhMods = RULES.familyHistoryModifiers || {};
   const hasFH = familyHistory?.firstDegreeT2D === 'yes';
   const bothRelatives = familyHistory?.firstDegreeT2DRelatives === 'both';
 

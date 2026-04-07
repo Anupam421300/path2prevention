@@ -95,7 +95,7 @@ body {
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 122vh; /* exactly counteracts zoom: 0.82 */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -673,9 +673,9 @@ textarea {
 
 /* ═══════════ AUTH PAGES ═══════════ */
 .auth-page {
-  min-height: 100vh;
+  min-height: 122vh; /* counteracts zoom: 0.82 to precisely span the physical screen height */
   display: flex;
-  overflow-y: auto;
+  align-items: stretch;
 }
 
 .auth-left {

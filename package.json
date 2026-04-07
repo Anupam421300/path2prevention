@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node api/index.js",
     "dev": "nodemon -w api -w src api/index.js",
-    "clear": "node scripts/clearUsers.js",
-    "seed:rules": "node scripts/import_rules.js"
+    "clear": "node scripts/clearUsers.js"
   },
   "dependencies": {
     "archiver": "^6.0.1",

@@ -34,6 +34,7 @@ const profileSchema = new Schema({
     hba1cPct: Number,
     loggedAt: Date,
   },
+  
   preferences: {
     scheduleType: { type: String, enum: ['regular', 'rotating', 'night_shift'], default: 'regular' },
     preferredUnits: { type: String, enum: ['metric', 'imperial'], default: 'metric' },
@@ -244,44 +245,8 @@ const tipSchema = new Schema({
   evidenceRef: String,
 });
 
-const glossaryTermSchema = new Schema({
-  term: String,
-  slug: { type: String, unique: true },
-  definition: String,
-  relatedTerms: [String],
-  evidenceRef: String,
-});
 
-const articleSchema = new Schema({
-  slug: { type: String, unique: true },
-  title: String,
-  summary: String,
-  content: String,
-  category: String,
-  readingMinutes: Number,
-  imageKeyword: String,
-  evidenceRefs: [String],
-  publishedAt: { type: Date, default: Date.now },
-});
 
-const recipeSchema = new Schema({
-  recipeId: { type: String, unique: true },
-  name: String,
-  description: String,
-  imageKeyword: String,
-  ingredients: [String],
-  instructions: [String],
-  nutritionSummary: {
-    calories: Number,
-    protein: Number,
-    fiber: Number,
-    sugars: Number,
-    gi_category: String,
-  },
-  diabetesFriendlyReasons: [String],
-  tags: [String],
-  evidenceRefs: [String],
-});
 
 const activityGuideSchema = new Schema({
   type: { type: String, unique: true },
@@ -299,47 +264,6 @@ const activityGuideSchema = new Schema({
   evidenceRef: String,
 });
 
-const pushSubscriptionSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-  subscription: Schema.Types.Mixed,
-}, { timestamps: true });
-
-const ruleVersionSchema = new Schema({
-  version: { type: String, unique: true },
-  active: Boolean,
-  baseRules: Schema.Types.Mixed,
-  familyHistoryModifiers: Schema.Types.Mixed,
-  conditionModifiers: Schema.Types.Mixed,
-});
-ruleVersionSchema.index({ active: 1 });
-
-const feedbackSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  text: String,
-  createdAt: { type: Date, default: Date.now },
-});
-
-const foodItemSchema = new Schema({
-  id: { type: String, unique: true },
-  name: String,
-  servingSize: String,
-  nutrients: {
-    calories: Number,
-    protein: Number,
-    fiber: Number,
-    sugars: Number,
-    gi_category: String,
-  },
-  tags: [String],
-});
-
-const personalRecordSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  category: { type: String, required: true },
-  value: Number,
-  achievedAt: Date,
-});
-personalRecordSchema.index({ userId: 1, category: 1 });
 
 // ───────────── Export All ─────────────
 module.exports = {
@@ -357,13 +281,5 @@ module.exports = {
   UserProgram: model('UserProgram', userProgramSchema, 'user_programs'),
   EvidenceSource: model('EvidenceSource', evidenceSourceSchema, 'evidence_sources'),
   Tip: model('Tip', tipSchema, 'tips'),
-  GlossaryTerm: model('GlossaryTerm', glossaryTermSchema, 'glossary_terms'),
-  Article: model('Article', articleSchema, 'articles'),
-  Recipe: model('Recipe', recipeSchema, 'recipes'),
   ActivityGuide: model('ActivityGuide', activityGuideSchema, 'activity_guides'),
-  PushSubscription: model('PushSubscription', pushSubscriptionSchema, 'push_subscriptions'),
-  RuleVersion: model('RuleVersion', ruleVersionSchema, 'rule_versions'),
-  Feedback: model('Feedback', feedbackSchema, 'feedback'),
-  FoodItem: model('FoodItem', foodItemSchema, 'food_items'),
-  PersonalRecord: model('PersonalRecord', personalRecordSchema, 'personal_records'),
 };

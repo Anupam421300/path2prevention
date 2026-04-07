@@ -73,32 +73,27 @@
         <img src="/images/logo!.jpeg" alt="Path2Prevention Logo" style="width: 120px; height: 120px; object-fit: cover; border-radius: 20px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); background: white;">
         <h1 style="font-size:32px;font-weight:800;margin-bottom:10px;line-height:1.2;letter-spacing:-0.5px;">Path2Prevention</h1>
         <p style="font-size: 19px;opacity:0.7;margin-bottom:38px;max-width:320px;line-height:1.6;">
-          Personalised lifestyle guidance to prevent Type 2 Diabetes — backed by clinical evidence.
+          A smarter way to understand your diabetes risk.
         </p>
       </div>
 
       <div class="auth-features" style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;margin-bottom:38px;">
         <div class="auth-benefit-item">
-          <span class="material-symbols-outlined">graphic_eq</span>
-          Computed risk score from your health data
-        </div>
-        <div class="auth-benefit-item">
-          <span class="material-symbols-outlined">recommend</span>
-          Personalised recommendations, updated daily
-        </div>
-        <div class="auth-benefit-item">
-          <span class="material-symbols-outlined">insights</span>
-          Track trends across sleep, steps, diet & mood
+          <span class="material-symbols-outlined">monitoring</span>
+          Track the habits that shape your score.
         </div>
         <div class="auth-benefit-item">
           <span class="material-symbols-outlined">verified_user</span>
-          Evidence-based — WHO, ADA &amp; DPP guidelines
+          Get evidence-based guidance tailored to your data.
+        </div>
+        <div class="auth-benefit-item">
+          <span class="material-symbols-outlined">login</span>
+          Sign in to continue your prevention journey.
         </div>
       </div>
 
       <div class="auth-stats" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
         <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span>Free to use</div>
-        <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">lock</span>HIPAA-aware</div>
         <div class="stat-pill"><span class="material-symbols-outlined" style="font-size: 18px;">science</span>Clinically grounded</div>
       </div>
     </div>
@@ -134,7 +129,7 @@
           </div>
 
           <div style="text-align:right;margin-top:-8px;margin-bottom:22px;">
-            <a href="#" style="font-size: 17px;color:#006c49;font-weight:500;">Forgot password?</a>
+            <a href="#" id="forgotPasswordLink" style="font-size: 17px;color:#006c49;font-weight:500;">Forgot password?</a>
           </div>
 
           <button type="submit" class="btn btn-primary btn-full" id="signInBtn">
@@ -150,6 +145,119 @@
         <p style="text-align:center;margin-top:34px;font-size: 15px;color:#bbcabf;line-height:1.5;">
           Path2Prevention is a lifestyle self-management tool and is not a substitute for professional medical advice or diagnosis.
         </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ FORGOT PASSWORD MODAL ════════ -->
+  <div id="forgotPwdBackdrop" style="
+    display:none;
+    position:fixed;inset:0;z-index:9000;
+    background:rgba(25,28,29,0.5);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    align-items:center;justify-content:center;
+    padding:18px;
+    opacity:0;transition:opacity 0.2s ease;
+  ">
+    <div id="forgotPwdPanel" style="
+      background:#fff;border-radius:20px;
+      box-shadow:0 20px 60px rgba(25,28,29,0.12),0 8px 20px rgba(25,28,29,0.06);
+      width:100%;max-width:480px;
+      transform:scale(0.94);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      overflow:hidden;
+    ">
+      <!-- Step 1: Verify Identity -->
+      <div id="fpStep1" style="padding:34px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+          <div>
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#006c49,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+              <span class="material-symbols-outlined" style="font-size:22px;color:white;">lock_reset</span>
+            </div>
+            <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.3px;margin-bottom:6px;">Reset Password</h2>
+            <p style="font-size:16px;color:#6c7a71;line-height:1.5;">Enter your email and date of birth to verify your identity.</p>
+          </div>
+          <button onclick="closeForgotModal()" style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:#6c7a71;flex-shrink:0;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <div id="fpErrorBox" style="display:none;align-items:center;gap:10px;padding:13px 15px;background:#ffdad6;border-radius:12px;color:#93000a;font-size:16px;margin-bottom:18px;">
+          <span class="material-symbols-outlined" style="font-size:20px;flex-shrink:0;">error</span>
+          <span id="fpErrorMsg">Date of birth does not match.</span>
+        </div>
+
+        <div class="input-group">
+          <label for="fpEmail">Email address</label>
+          <div class="input-icon-wrap">
+            <span class="material-symbols-outlined">mail</span>
+            <input class="input-field" type="email" id="fpEmail" placeholder="you@example.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="input-group" style="margin-top:14px;">
+          <label for="fpDob">Date of birth</label>
+          <input class="input-field" type="date" id="fpDob" style="padding-left:14px;">
+          <p style="font-size:14px;color:#6c7a71;margin-top:6px;">Must match the date of birth you registered with.</p>
+        </div>
+
+        <button id="fpVerifyBtn" onclick="fpVerifyIdentity()" class="btn btn-primary btn-full" style="margin-top:22px;">
+          <span id="fpVerifyText">Verify Identity</span>
+        </button>
+
+        <p style="text-align:center;margin-top:16px;font-size:15px;color:#6c7a71;">
+          Remembered it? <a href="#" onclick="closeForgotModal();return false;" style="color:#006c49;font-weight:600;">Back to sign in</a>
+        </p>
+      </div>
+
+      <!-- Step 2: Set New Password (hidden initially) -->
+      <div id="fpStep2" style="display:none;padding:34px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;">
+          <div>
+            <div style="width:42px;height:42px;background:linear-gradient(135deg,#006c49,#10b981);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+              <span class="material-symbols-outlined" style="font-size:22px;color:white;">key</span>
+            </div>
+            <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.3px;margin-bottom:6px;">Set New Password</h2>
+            <p style="font-size:16px;color:#6c7a71;line-height:1.5;">Identity verified ✓ Choose a strong new password.</p>
+          </div>
+          <button onclick="closeForgotModal()" style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:#6c7a71;flex-shrink:0;">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <div id="fpStep2Error" style="display:none;align-items:center;gap:10px;padding:13px 15px;background:#ffdad6;border-radius:12px;color:#93000a;font-size:16px;margin-bottom:18px;">
+          <span class="material-symbols-outlined" style="font-size:20px;flex-shrink:0;">error</span>
+          <span id="fpStep2ErrorMsg">Passwords do not match.</span>
+        </div>
+
+        <div class="input-group">
+          <label for="fpNewPwd">New password</label>
+          <div class="input-icon-wrap">
+            <span class="material-symbols-outlined">lock</span>
+            <input class="input-field" type="password" id="fpNewPwd" placeholder="At least 8 characters">
+          </div>
+        </div>
+        <div class="input-group" style="margin-top:14px;">
+          <label for="fpConfirmPwd">Confirm new password</label>
+          <div class="input-icon-wrap">
+            <span class="material-symbols-outlined">lock</span>
+            <input class="input-field" type="password" id="fpConfirmPwd" placeholder="Re-enter new password">
+          </div>
+        </div>
+
+        <button id="fpResetBtn" onclick="fpResetPassword()" class="btn btn-primary btn-full" style="margin-top:22px;">
+          <span id="fpResetText">Reset Password</span>
+        </button>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="fpStep3" style="display:none;padding:42px;text-align:center;">
+        <div style="width:72px;height:72px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+          <span class="material-symbols-outlined" style="font-size:36px;color:#059669;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;">check_circle</span>
+        </div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:10px;">Password Reset!</h2>
+        <p style="font-size:16px;color:#6c7a71;line-height:1.6;margin-bottom:28px;">Your password has been updated successfully. You can now sign in with your new password.</p>
+        <button onclick="closeForgotModal()" class="btn btn-primary btn-full">Back to Sign In</button>
       </div>
     </div>
   </div>
@@ -212,6 +320,148 @@
     // If already logged in, redirect
     if (localStorage.getItem('p2p_token')) {
       window.location.href = '/app';
+    }
+
+    // ── Forgot Password Modal ──
+    let fpVerifiedEmail = '';
+    let fpVerifiedDob = '';
+
+    document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      openForgotModal();
+    });
+
+    function openForgotModal() {
+      const backdrop = document.getElementById('forgotPwdBackdrop');
+      // Reset to step 1
+      document.getElementById('fpStep1').style.display = 'block';
+      document.getElementById('fpStep2').style.display = 'none';
+      document.getElementById('fpStep3').style.display = 'none';
+      document.getElementById('fpErrorBox').style.display = 'none';
+      document.getElementById('fpEmail').value = '';
+      document.getElementById('fpDob').value = '';
+      fpVerifiedEmail = '';
+      fpVerifiedDob = '';
+      backdrop.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        backdrop.style.opacity = '1';
+        document.getElementById('forgotPwdPanel').style.transform = 'scale(1)';
+      }, 10);
+    }
+
+    function closeForgotModal() {
+      const backdrop = document.getElementById('forgotPwdBackdrop');
+      backdrop.style.opacity = '0';
+      document.getElementById('forgotPwdPanel').style.transform = 'scale(0.94)';
+      document.body.style.overflow = '';
+      setTimeout(() => { backdrop.style.display = 'none'; }, 220);
+    }
+
+    // Click backdrop to close
+    document.getElementById('forgotPwdBackdrop').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('forgotPwdBackdrop')) closeForgotModal();
+    });
+
+    async function fpVerifyIdentity() {
+      const email = document.getElementById('fpEmail').value.trim();
+      const dob = document.getElementById('fpDob').value;
+      const errBox = document.getElementById('fpErrorBox');
+      const errMsg = document.getElementById('fpErrorMsg');
+      const btn = document.getElementById('fpVerifyBtn');
+      const btnTxt = document.getElementById('fpVerifyText');
+
+      errBox.style.display = 'none';
+
+      if (!email || !dob) {
+        errMsg.textContent = 'Please enter your email and date of birth.';
+        errBox.style.display = 'flex';
+        return;
+      }
+
+      btn.disabled = true;
+      btnTxt.innerHTML = '<span class="loading-spinner"></span> Verifying…';
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/verify-dob`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, dob })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errMsg.textContent = data.error || 'Date of birth does not match. Please enter the correct date of birth.';
+          errBox.style.display = 'flex';
+          btn.disabled = false;
+          btnTxt.textContent = 'Verify Identity';
+          return;
+        }
+
+        // DOB verified — proceed to step 2
+        fpVerifiedEmail = email;
+        fpVerifiedDob = dob;
+        document.getElementById('fpStep1').style.display = 'none';
+        document.getElementById('fpStep2').style.display = 'block';
+
+      } catch (err) {
+        errMsg.textContent = 'Connection error. Please try again.';
+        errBox.style.display = 'flex';
+        btn.disabled = false;
+        btnTxt.textContent = 'Verify Identity';
+      }
+    }
+
+    async function fpResetPassword() {
+      const newPwd = document.getElementById('fpNewPwd').value;
+      const confirmPwd = document.getElementById('fpConfirmPwd').value;
+      const errBox = document.getElementById('fpStep2Error');
+      const errMsg = document.getElementById('fpStep2ErrorMsg');
+      const btn = document.getElementById('fpResetBtn');
+      const btnTxt = document.getElementById('fpResetText');
+
+      errBox.style.display = 'none';
+
+      if (!newPwd || newPwd.length < 8) {
+        errMsg.textContent = 'Password must be at least 8 characters.';
+        errBox.style.display = 'flex';
+        return;
+      }
+      if (newPwd !== confirmPwd) {
+        errMsg.textContent = 'Passwords do not match. Please re-enter.';
+        errBox.style.display = 'flex';
+        return;
+      }
+
+      btn.disabled = true;
+      btnTxt.innerHTML = '<span class="loading-spinner"></span> Resetting…';
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/forgot-password`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: fpVerifiedEmail, dob: fpVerifiedDob, newPassword: newPwd })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          errMsg.textContent = data.error || 'Reset failed. Please start over.';
+          errBox.style.display = 'flex';
+          btn.disabled = false;
+          btnTxt.textContent = 'Reset Password';
+          return;
+        }
+
+        // Success!
+        document.getElementById('fpStep2').style.display = 'none';
+        document.getElementById('fpStep3').style.display = 'block';
+
+      } catch (err) {
+        errMsg.textContent = 'Connection error. Please try again.';
+        errBox.style.display = 'flex';
+        btn.disabled = false;
+        btnTxt.textContent = 'Reset Password';
+      }
     }
   </script>
 </body>

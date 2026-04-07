@@ -114,6 +114,8 @@
 
   .auth-left {
     display: contents !important; /* Allows children to participate in the flex-column of auth-page */
+    position: static !important;
+    height: auto !important;
   }
   
   .auth-brand {
@@ -146,6 +148,7 @@
   .auth-right {
     order: 2 !important;
     width: 100% !important;
+    margin-left: 0 !important;
     padding: 36px 24px !important;
     background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(20px);

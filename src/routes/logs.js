@@ -72,13 +72,18 @@ router.post('/daily', validate(dailyLogSchema), async (req, res, next) => {
       { upsert: true, new: true }
     );
 
-    // Run pipeline
-    const pipelineResult = await pipeline.run(userId);
+    // Run pipeline — wrap separately so a pipeline error doesn't fail the save
+    let pipelineResult = null;
+    try {
+      pipelineResult = await pipeline.run(userId);
+    } catch (pipelineErr) {
+      console.error('Pipeline error after log save (non-fatal):', pipelineErr?.message);
+    }
 
     res.json({
       log,
-      riskScore: pipelineResult?.riskScore,
-      engagement: pipelineResult?.engagement,
+      riskScore: pipelineResult?.riskScore || null,
+      engagement: pipelineResult?.engagement || null,
     });
   } catch (err) { next(err); }
 });
@@ -91,17 +96,6 @@ router.get('/daily/:date', async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/logs/range?start=YYYY-MM-DD&end=YYYY-MM-DD
-router.get('/range', async (req, res, next) => {
-  try {
-    const { start, end } = req.query;
-    const logs = await DailyLog.find({
-      userId: req.userId,
-      date: { $gte: start, $lte: end },
-    }).sort({ date: -1 });
-    res.json(logs);
-  } catch (err) { next(err); }
-});
 
 // POST /api/logs/weekly
 router.post('/weekly', validate(weeklyMeasureSchema), async (req, res, next) => {
@@ -113,14 +107,6 @@ router.post('/weekly', validate(weeklyMeasureSchema), async (req, res, next) => 
       { upsert: true, new: true }
     );
     res.json(measure);
-  } catch (err) { next(err); }
-});
-
-// GET /api/logs/weekly
-router.get('/weekly', async (req, res, next) => {
-  try {
-    const measures = await WeeklyMeasure.find({ userId: req.userId }).sort({ weekStartDate: -1 }).limit(24);
-    res.json(measures);
   } catch (err) { next(err); }
 });
 

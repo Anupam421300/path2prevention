@@ -34,16 +34,4 @@ router.put('/', validate(settingsUpdateSchema), async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/settings/export-stats
-router.get('/export-stats', async (req, res, next) => {
-  try {
-    const { DailyLog, RiskScore } = require('../models');
-    const [logsCount, scoresCount] = await Promise.all([
-      DailyLog.countDocuments({ userId: req.userId }),
-      RiskScore.countDocuments({ userId: req.userId })
-    ]);
-    res.json({ logsCount, reportsCount: scoresCount });
-  } catch (err) { next(err); }
-});
-
 module.exports = router;

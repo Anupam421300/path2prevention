@@ -24,6 +24,12 @@ const passwordSchema = z.object({
   newPassword: z.string().min(8),
 });
 
+const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+  dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date of birth must be YYYY-MM-DD'),
+  newPassword: z.string().min(8),
+});
+
 function issueToken(user) {
   return jwt.sign(
     { userId: user._id, email: user.email },
@@ -104,6 +110,54 @@ router.patch('/password', authMiddleware, validate(passwordSchema), async (req, 
     user.passwordHash = await bcrypt.hash(req.body.newPassword, 12);
     await user.save();
     res.json({ message: 'Password updated' });
+  } catch (err) { next(err); }
+});
+
+// POST /api/auth/verify-dob — verify identity without changing password (Step 1 of forgot password flow)
+router.post('/verify-dob', async (req, res, next) => {
+  try {
+    const { email, dob } = req.body;
+    if (!email || !dob) return res.status(400).json({ error: 'Email and date of birth are required.' });
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+
+    const profile = await Profile.findOne({ userId: user._id });
+    if (!profile || !profile.dob) {
+      return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+    }
+
+    const storedDob = new Date(profile.dob).toISOString().split('T')[0];
+    if (storedDob !== dob) {
+      return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+    }
+
+    res.json({ verified: true });
+  } catch (err) { next(err); }
+});
+
+// POST /api/auth/forgot-password (public — no JWT required)
+router.post('/forgot-password', validate(forgotPasswordSchema), async (req, res, next) => {
+  try {
+    const { email, dob, newPassword } = req.body;
+    const user = await User.findOne({ email: email.toLowerCase() });
+    // Always return same error for invalid email — prevents email enumeration
+    if (!user) return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+
+    const profile = await Profile.findOne({ userId: user._id });
+    if (!profile || !profile.dob) {
+      return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+    }
+
+    // Normalise stored DOB to YYYY-MM-DD for comparison
+    const storedDob = new Date(profile.dob).toISOString().split('T')[0];
+    if (storedDob !== dob) {
+      return res.status(400).json({ error: 'Date of birth does not match. Please enter the correct date of birth.' });
+    }
+
+    user.passwordHash = await bcrypt.hash(newPassword, 12);
+    await user.save();
+    res.json({ message: 'Password reset successfully. You can now sign in with your new password.' });
   } catch (err) { next(err); }
 });
 

@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const { DailyLog, RiskScore, CorrelationSnapshot, WeeklyMeasure, WeeklyReport, RiskTrajectory, Profile, Goal } = require('../models');
+const { DailyLog, RiskScore, CorrelationSnapshot, WeeklyMeasure, Profile } = require('../models');
 const { getTodayString, addDays, avg, stdDev, getWeekStart, daysDiff, scoreToGrade, pearsonR, sum } = require('../utils');
 const { simulateLimiter } = require('../middleware');
 
