@@ -105,13 +105,23 @@ function ob_step1() {
 
 function ob_step1_next() {
   const fn = document.getElementById('ob1FirstName')?.value.trim();
-  if (!fn) { showToast('Please enter your first name to continue.', 'error'); return; }
+  const ln = document.getElementById('ob1LastName')?.value.trim();
+  const dob = document.getElementById('ob1Dob')?.value;
+  const sex = document.getElementById('ob1Sex')?.value;
+  const height = document.getElementById('ob1Height')?.value;
+  const weight = document.getElementById('ob1Weight')?.value;
+
+  if (!fn || !ln || !dob || !sex || !height || !weight) {
+    showToast('Please fill out all fields to continue.', 'error');
+    return;
+  }
+
   onboardingData.firstName = fn;
-  onboardingData.lastName = document.getElementById('ob1LastName')?.value.trim();
-  onboardingData.dob = document.getElementById('ob1Dob')?.value;
-  onboardingData.sex = document.getElementById('ob1Sex')?.value;
-  onboardingData.heightCm = parseFloat(document.getElementById('ob1Height')?.value) || undefined;
-  onboardingData.weightKg = parseFloat(document.getElementById('ob1Weight')?.value) || undefined;
+  onboardingData.lastName = ln;
+  onboardingData.dob = dob;
+  onboardingData.sex = sex;
+  onboardingData.heightCm = parseFloat(height);
+  onboardingData.weightKg = parseFloat(weight);
   onboardingStep = 2;
   renderOnboardingStep();
 }
@@ -126,7 +136,7 @@ function ob_step2() {
         <span class="material-symbols-outlined" style="font-size: 20px;">biotech</span> Biometric Vitality
       </div>
       <h2 style="font-size:34px;font-weight:800;letter-spacing:-1px;margin-bottom:14px;line-height:1.2;color:var(--text-primary);">Your health baseline</h2>
-      <p style="font-size: 19px;color:var(--text-muted);margin-bottom:34px;line-height:1.6;">These critical measurements help us calculate your diabetes risk accurately. All optional.</p>
+      <p style="font-size: 19px;color:var(--text-muted);margin-bottom:34px;line-height:1.6;">These critical measurements help us calculate your diabetes risk accurately.</p>
 
       <div style="padding:22px;background:rgba(245,158,11,0.06);border-radius:14px;border:1px solid rgba(245,158,11,0.15);margin-bottom:22px;">
         <p style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#92400e;margin-bottom:14px;">Lab Values (from your last check-up)</p>
@@ -193,8 +203,22 @@ function toggleFHCondition(label, condition) {
 }
 
 function ob_step2_next() {
-  const glucose = parseFloat(document.getElementById('ob2Glucose')?.value || 0);
-  const hba1c = parseFloat(document.getElementById('ob2HbA1c')?.value || 0);
+  const glucoseVal = document.getElementById('ob2Glucose')?.value;
+  const hba1cVal = document.getElementById('ob2HbA1c')?.value;
+
+  if (!glucoseVal || !hba1cVal) {
+    showToast('Please fill out all lab values to continue.', 'error');
+    return;
+  }
+
+  if (selectedConditions.size === 0) {
+    showToast('Please select a family history option to continue.', 'error');
+    return;
+  }
+
+  const glucose = parseFloat(glucoseVal);
+  const hba1c = parseFloat(hba1cVal);
+
   if (glucose > 0) onboardingData.fastingGlucoseMmol = +(glucose / 18).toFixed(2);
   if (hba1c > 0) onboardingData.hba1cPct = hba1c;
   onboardingData.familyHistory = {
