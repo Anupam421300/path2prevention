@@ -42,7 +42,6 @@ app.use('/api/auth', authLimiter, require('../src/routes/auth'));
 app.use('/api', authMiddleware, mainLimiter);
 
 app.use('/api/profile', require('../src/routes/profile'));
-app.use('/api/settings', require('../src/routes/settings'));
 app.use('/api/logs', require('../src/routes/logs'));
 app.use('/api/dashboard', require('../src/routes/dashboard'));
 app.use('/api/insights', require('../src/routes/insights'));

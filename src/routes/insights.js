@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { DailyLog, RiskScore, CorrelationSnapshot, WeeklyMeasure, Profile } = require('../models');
-const { getTodayString, addDays, avg, stdDev, getWeekStart, daysDiff, scoreToGrade, pearsonR, sum } = require('../utils');
+const { getTodayString, addDays, avg, stdDev, getWeekStart, daysDiff, pearsonR, sum } = require('../utils');
 const { simulateLimiter } = require('../middleware');
 
 // GET /api/insights/analytics — Monthly analytics
@@ -75,7 +75,7 @@ router.get('/correlations', async (req, res, next) => {
     const snap = await CorrelationSnapshot.findOne({ userId: req.userId }).sort({ computedAt: -1 });
     if (!snap) {
       const daysLogged = await require('../models').DailyLog.countDocuments({ userId: req.userId });
-      return res.json({ pairs: [], hasEnoughData: false, daysLogged, daysNeeded: Math.max(0, 14 - daysLogged) });
+      return res.json({ pairs: [], hasEnoughData: false, daysLogged, daysNeeded: Math.max(0, 3 - daysLogged) });
     }
     // Inject hasEnoughData — schema doesn't store it, derive it from pairs
     const hasEnoughData = Array.isArray(snap.pairs) && snap.pairs.length > 0;

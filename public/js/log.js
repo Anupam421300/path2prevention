@@ -46,6 +46,8 @@ function buildLogHTML(log) {
   const stress = log.stressScore || 0;
   const sedentary = log.sedentaryHours || 0;
   const glucose = log.fastingGlucoseMmol ? Math.round(log.fastingGlucoseMmol * 18) : '';
+  const ctx = log.weightContext || { unlocksInDays: 0, lastWeight: null, lastWaist: null };
+  const lockedWeight = ctx.unlocksInDays > 0;
 
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
@@ -102,15 +104,22 @@ function buildLogHTML(log) {
           </button>
         </div>
 
-        <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;">
+        <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;padding:18px;border:1px solid #e7e8e9;border-radius:14px;background:#f8f9fa;">
           <div class="input-group" style="margin-bottom:0;">
-            <label>Weight (kg)</label>
-            <input class="input-field" type="number" id="weightInput" placeholder="e.g. 72.5" min="20" max="300" step="0.1" value="${log.weightKg || ''}">
+            <label style="display:flex;justify-content:space-between;align-items:center;">
+              Weight (kg)
+              ${lockedWeight ? '<span class="material-symbols-outlined" style="font-size:16px;color:#ba1a1a;" title="Locked for 15 days">lock</span>' : ''}
+            </label>
+            <input class="input-field" type="number" id="weightInput" placeholder="e.g. 72.5" min="20" max="300" step="0.1" value="${log.weightKg || ctx.lastWeight || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:#6c7a71;cursor:not-allowed;"' : ''}>
           </div>
           <div class="input-group" style="margin-bottom:0;">
-            <label>Waist (cm)</label>
-            <input class="input-field" type="number" id="waistInput" placeholder="e.g. 88" min="40" max="200" value="${log.waistCm || ''}">
+            <label style="display:flex;justify-content:space-between;align-items:center;">
+              Waist (cm)
+              ${lockedWeight ? '<span class="material-symbols-outlined" style="font-size:16px;color:#ba1a1a;" title="Locked for 15 days">lock</span>' : ''}
+            </label>
+            <input class="input-field" type="number" id="waistInput" placeholder="e.g. 88" min="40" max="200" value="${log.waistCm || ctx.lastWaist || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:#6c7a71;cursor:not-allowed;"' : ''}>
           </div>
+          ${lockedWeight ? `<div style="grid-column:span 2;font-size:14px;color:#ba1a1a;margin-top:4px;display:flex;align-items:center;gap:4px;"><span class="material-symbols-outlined" style="font-size:16px;">lock</span> Unlocks in ${ctx.unlocksInDays} day${ctx.unlocksInDays !== 1 ? 's' : ''}</div>` : `<div style="grid-column:span 2;font-size:14px;color:#6c7a71;margin-top:4px;">Log every 15 days to track changes.</div>`}
         </div>
       </div>
 
@@ -349,9 +358,10 @@ async function saveLog() {
 
     const result = await api.post('/logs/daily', payload);
 
-    // Save weekly measure if weight was entered
-    const weight = parseFloat(document.getElementById('weightInput')?.value || 0);
-    if (weight > 0) {
+    // Save weekly measure if weight was entered and the input is unlocked
+    const weightInputEl = document.getElementById('weightInput');
+    const weight = parseFloat(weightInputEl?.value || 0);
+    if (weight > 0 && weightInputEl && !weightInputEl.disabled) {
       const waist = parseFloat(document.getElementById('waistInput')?.value || 0);
       await api.post('/logs/weekly', { weightKg: weight, ...(waist > 0 ? { waistCm: waist } : {}) }).catch(() => { });
     }

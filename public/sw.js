@@ -1,8 +1,9 @@
-const CACHE_NAME = 'p2p-v5';
+const CACHE_NAME = 'p2p-v6';
 const STATIC_ASSETS = [
   '/app',
   '/css/main.css',
   '/css/mobile.css',
+  '/css/auth.css',
   '/js/api.js',
   '/js/state.js',
   '/js/router.js',
@@ -11,6 +12,8 @@ const STATIC_ASSETS = [
   '/js/log.js',
   '/js/insights.js',
   '/js/settings.js',
+  '/js/auth-login.js',
+  '/js/auth-register.js',
 ];
 
 self.addEventListener('install', (e) => {

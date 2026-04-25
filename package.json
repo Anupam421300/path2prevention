@@ -22,7 +22,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3",
     "morgan": "^1.10.0",
-    "web-push": "^3.6.7",
     "zod": "^3.22.4"
   },
   "devDependencies": {

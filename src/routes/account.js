@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const { User, Profile, Settings, DailyLog, WeeklyMeasure, RiskScore, Recommendation, StreakRecord, CorrelationSnapshot, RiskTrajectory, Goal, UserProgram } = require('../models');
+const { User, Profile, DailyLog, WeeklyMeasure, RiskScore, Recommendation, StreakRecord, CorrelationSnapshot, RiskTrajectory, Goal, UserProgram } = require('../models');
 
 // DELETE /api/account
 router.delete('/account', async (req, res, next) => {
@@ -17,7 +17,6 @@ router.delete('/account', async (req, res, next) => {
       RiskTrajectory.deleteMany({ userId }),
       Goal.deleteMany({ userId }),
       UserProgram.deleteMany({ userId }),
-      Settings.deleteMany({ userId }),
       Profile.deleteMany({ userId }),
       User.deleteOne({ _id: userId }),
     ]);

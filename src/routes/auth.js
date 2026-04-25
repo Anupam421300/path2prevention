@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { z } = require('zod');
-const { User, Profile, Settings } = require('../models');
+const { User, Profile } = require('../models');
 const { validate } = require('../middleware');
 const { authMiddleware } = require('../middleware');
 
@@ -48,9 +48,8 @@ router.post('/register', validate(registerSchema), async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password, 12);
     const user = await User.create({ email: email.toLowerCase(), passwordHash });
 
-    // Create empty profile and settings
+    // Create empty profile
     await Profile.create({ userId: user._id, firstName });
-    await Settings.create({ userId: user._id });
 
     const token = issueToken(user);
     res.status(201).json({
@@ -65,10 +64,39 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
-    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+    if (!user) return res.status(401).json({ error: 'Email not found in our system' });
+
+    // Check if account is currently locked
+    if (user.lockUntil && user.lockUntil > Date.now()) {
+      const waitMinutes = Math.ceil((user.lockUntil - Date.now()) / 60000);
+      return res.status(429).json({ error: `Account locked. Try again in ${waitMinutes} minute(s).` });
+    }
 
     const valid = await bcrypt.compare(password, user.passwordHash);
-    if (!valid) return res.status(401).json({ error: 'Invalid email or password' });
+    
+    if (!valid) {
+      user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+      let errorMsg = 'Incorrect password';
+      let statusCode = 401;
+      
+      if (user.failedLoginAttempts >= 5) {
+        user.lockUntil = Date.now() + 10 * 60 * 1000; // 10 minutes
+        errorMsg = 'Account locked for 10 minutes due to too many failed attempts.';
+        statusCode = 429;
+      } else if (user.failedLoginAttempts === 4) {
+        errorMsg = 'Incorrect password. Warning: 1 attempt remaining before your account is temporarily locked.';
+      }
+      
+      await user.save();
+      return res.status(statusCode).json({ error: errorMsg });
+    }
+
+    // Reset lock logic on successful login
+    if (user.failedLoginAttempts > 0 || user.lockUntil) {
+      user.failedLoginAttempts = 0;
+      user.lockUntil = undefined;
+      await user.save();
+    }
 
     const profile = await Profile.findOne({ userId: user._id });
     const token = issueToken(user);

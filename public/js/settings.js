@@ -4,19 +4,18 @@ async function loadSettings() {
   const container = document.getElementById('tab-settings');
   container.innerHTML = '<div class="skeleton skeleton-card" style="height:500px;border-radius:20px;"></div>';
   try {
-    const [profile, settings, program] = await Promise.all([
+    const [profile, program] = await Promise.all([
       api.get('/profile'),
-      api.get('/settings'),
       api.get('/engagement/program').catch(() => ({ enrolled: false })),
     ]);
-    container.innerHTML = buildSettingsHTML(profile, settings, program);
-    bindSettingsEvents(profile, settings);
+    container.innerHTML = buildSettingsHTML(profile, program);
   } catch (err) {
+    console.error('Error loading settings:', err);
     container.innerHTML = errorState('Could not load settings.', () => loadSettings());
   }
 }
 
-function buildSettingsHTML(profile, settings, program) {
+function buildSettingsHTML(profile, program) {
   const initials = [(profile.firstName || '')[0], (profile.lastName || '')[0]].filter(Boolean).join('').toUpperCase() || 'U';
   const joinDate = profile.createdAt ? new Date(profile.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : '';
 
@@ -185,7 +184,6 @@ async function saveProfile() {
       dob: document.getElementById('setDob')?.value,
       sex: document.getElementById('setSex')?.value,
       heightCm: parseFloat(document.getElementById('setHeight')?.value) || undefined,
-      weightKg: parseFloat(document.getElementById('setWeight')?.value) || undefined,
     };
     Object.keys(payload).forEach(k => { if (!payload[k]) delete payload[k]; });
     await api.put('/profile', payload);
@@ -199,15 +197,7 @@ async function saveProfile() {
   }
 }
 
-async function saveSettings() {
-  try {
-    const payload = {
-      notificationsEnabled: document.getElementById('notifToggle')?.checked,
-      reminderTime: document.getElementById('reminderTime')?.value,
-    };
-    await api.put('/settings', payload);
-  } catch { }
-}
+
 
 
 async function downloadCSV() {
@@ -277,4 +267,3 @@ function confirmDeleteAccount() {
   }).catch(() => showToast('Deletion failed. Please try again.', 'error'));
 }
 
-function bindSettingsEvents(profile, settings) { }

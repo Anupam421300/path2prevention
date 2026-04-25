@@ -1,4 +1,4 @@
-/* {
+{
   "name": "Path2Prevention",
   "short_name": "P2P",
   "description": "Understand your diabetes risk and build healthier habits",
@@ -11,4 +11,3 @@
     { "src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
- */

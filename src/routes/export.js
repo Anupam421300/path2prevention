@@ -18,7 +18,7 @@ router.get('/csv', async (req, res, next) => {
     // Build CSV
     const headers = [
       'Date', 'Steps', 'Sleep (hrs)', 'Water (glasses)', 'Sedentary (hrs)', 
-      'Stress (1-5)', 'Diet Score', 'Sugary Drinks', 'Fast Food', 
+      'Stress (1-5)', 'Sugary Drinks', 'Fast Food', 
       'Activity (min)', 'Fasting Glucose (mmol)', 'Risk Score', 'Risk Level', 
       'Weight (kg)', 'Waist (cm)'
     ];
@@ -46,7 +46,6 @@ router.get('/csv', async (req, res, next) => {
         l.waterGlasses || 0,
         l.sedentaryHours || 0,
         l.stressScore || '',
-        l.dietSignals?.dietScore || '',
         l.dietSignals?.sugaryDrinks || '',
         l.dietSignals?.fastFood || '',
         activityMin,

@@ -94,7 +94,11 @@ function ob_step1() {
         </div>
       </div>
 
-      <div style="display:flex;justify-content:flex-end;margin-top:auto;padding-top:30px;">
+      <div id="obError1" style="display:none; align-items:center; gap:8px; padding:10px 14px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; color:#b91c1c; font-size:14px; font-weight:600; margin-bottom:16px;">
+        <span class="material-symbols-outlined" style="font-size:18px;">error</span>
+        <span id="obErrorText1">Please fill out all fields to continue.</span>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:auto;padding-top:10px;">
         <button onclick="ob_step1_next()" class="btn btn-primary">
           Continue <span class="material-symbols-outlined" style="font-size: 22px;vertical-align:middle;">arrow_forward</span>
         </button>
@@ -112,9 +116,19 @@ function ob_step1_next() {
   const weight = document.getElementById('ob1Weight')?.value;
 
   if (!fn || !ln || !dob || !sex || !height || !weight) {
-    showToast('Please fill out all fields to continue.', 'error');
+    const errDiv = document.getElementById('obError1');
+    if (errDiv) {
+      errDiv.style.display = 'flex';
+      // Add a shake animation class or simply display it
+      errDiv.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+    } else {
+      showToast('Please fill out all fields to continue.', 'error');
+    }
     return;
   }
+  
+  const errDiv = document.getElementById('obError1');
+  if (errDiv) errDiv.style.display = 'none';
 
   onboardingData.firstName = fn;
   onboardingData.lastName = ln;
@@ -139,7 +153,7 @@ function ob_step2() {
       <p style="font-size: 19px;color:var(--text-muted);margin-bottom:34px;line-height:1.6;">These critical measurements help us calculate your diabetes risk accurately.</p>
 
       <div style="padding:22px;background:rgba(245,158,11,0.06);border-radius:14px;border:1px solid rgba(245,158,11,0.15);margin-bottom:22px;">
-        <p style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#92400e;margin-bottom:14px;">Lab Values (from your last check-up)</p>
+        <p style="font-size: 15px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#92400e;margin-bottom:14px;">Lab Values (Optional)</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
           <div class="input-group" style="margin-bottom:0;">
             <label>Fasting Glucose (mg/dL)</label>
@@ -168,7 +182,11 @@ function ob_step2() {
         </div>
       </div>
 
-      <div style="display:flex;justify-content:space-between;margin-top:auto;padding-top:30px;">
+      <div id="obError2" style="display:none; align-items:center; gap:8px; padding:10px 14px; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; color:#b91c1c; font-size:14px; font-weight:600; margin-bottom:16px;">
+        <span class="material-symbols-outlined" style="font-size:18px;">error</span>
+        <span id="obErrorText2"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:auto;padding-top:10px;">
         <button onclick="ob_back()" class="btn btn-ghost">
           <span class="material-symbols-outlined" style="font-size: 22px;vertical-align:middle;">arrow_back</span> Back
         </button>
@@ -206,15 +224,23 @@ function ob_step2_next() {
   const glucoseVal = document.getElementById('ob2Glucose')?.value;
   const hba1cVal = document.getElementById('ob2HbA1c')?.value;
 
-  if (!glucoseVal || !hba1cVal) {
-    showToast('Please fill out all lab values to continue.', 'error');
-    return;
-  }
+  const errDiv = document.getElementById('obError2');
+  const errText = document.getElementById('obErrorText2');
+
+
 
   if (selectedConditions.size === 0) {
-    showToast('Please select a family history option to continue.', 'error');
+    if (errDiv && errText) {
+      errText.textContent = 'Please select a family history option to continue.';
+      errDiv.style.display = 'flex';
+      errDiv.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 300 });
+    } else {
+      showToast('Please select a family history option to continue.', 'error');
+    }
     return;
   }
+  
+  if (errDiv) errDiv.style.display = 'none';
 
   const glucose = parseFloat(glucoseVal);
   const hba1c = parseFloat(hba1cVal);

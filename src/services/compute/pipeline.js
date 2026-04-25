@@ -1,7 +1,7 @@
 'use strict';
 const { Profile, DailyLog, WeeklyMeasure, RiskScore, Recommendation, Goal, StreakRecord, CorrelationSnapshot, RiskTrajectory, Tip } = require('../../models');
 const { RULES } = require('../../data/seedData');
-const { getTodayString, addDays, daysDiff, getWeekStart, avg, sum, stdDev, computeBMI, pearsonR, scoreToGrade, getGreeting, getDayOfYear } = require('../../utils');
+const { getTodayString, addDays, daysDiff, getWeekStart, avg, sum, stdDev, computeBMI, pearsonR } = require('../../utils');
 
 // ═══════════ Step 1: normalizeInputs ═══════════
 async function normalizeInputs(userId) {
@@ -388,7 +388,7 @@ function evalOp(val, op, target) {
 // ═══════════ Step 7: computeCorrelations ═══════════
 async function computeCorrelations(userId, logs) {
   const recentLogs = logs.slice(0, 28);
-  if (recentLogs.length < 14) {
+  if (recentLogs.length < 3) {
     await CorrelationSnapshot.findOneAndUpdate(
       { userId },
       { userId, computedAt: new Date(), windowDays: 28, pairs: [] },
@@ -408,6 +408,11 @@ async function computeCorrelations(userId, logs) {
     ['stressScore', 'sugaryDrinks', 'Stress', 'Sugary drinks'],
     ['stressScore', 'fastFood', 'Stress', 'Fast food'],
     ['sleepHours', 'sugaryDrinks', 'Sleep', 'Sugary drinks'],
+    // Diabetes prevention specific correlations
+    ['sugaryDrinks', 'fastingGlucoseMmol', 'Sugary drinks', 'Fasting glucose'],
+    ['moderateEqMin', 'fastingGlucoseMmol', 'Activity', 'Fasting glucose'],
+    ['steps', 'fastingGlucoseMmol', 'Steps', 'Fasting glucose'],
+    ['fastFood', 'fastingGlucoseMmol', 'Fast food', 'Fasting glucose']
   ];
 
   const getVal = (log, field) => {
@@ -425,7 +430,7 @@ async function computeCorrelations(userId, logs) {
       const b = getVal(log, fieldB);
       if (a != null && b != null) { xs.push(a); ys.push(b); }
     }
-    if (xs.length < 14) continue;
+    if (xs.length < 3) continue;
     const result = pearsonR(xs, ys);
     if (Math.abs(result.r) >= 0.3) {
       const relText = result.r > 0

@@ -17,7 +17,6 @@ const dailyLogSchema = z.object({
   dietSignals: z.object({
     sugaryDrinks: z.number().min(0).max(20).optional(),
     fastFood: z.number().min(0).max(10).optional(),
-    dietScore: z.number().min(1).max(10).optional(),
   }).optional(),
   physicalActivities: z.array(z.object({
     type: z.string(),
@@ -91,8 +90,42 @@ router.post('/daily', validate(dailyLogSchema), async (req, res, next) => {
 // GET /api/logs/daily/:date
 router.get('/daily/:date', async (req, res, next) => {
   try {
-    const log = await DailyLog.findOne({ userId: req.userId, date: req.params.date });
-    res.json(log || { date: req.params.date, empty: true });
+    const log = await DailyLog.findOne({ userId: req.userId, date: req.params.date }).lean();
+    
+    const { Profile, WeeklyMeasure } = require('../models');
+    const latestMeasure = await WeeklyMeasure.findOne({ userId: req.userId }).sort({ createdAt: -1 }).lean();
+    let lastWeightDate = null;
+    let lastWeight = null;
+    let lastWaist = null;
+    
+    if (latestMeasure) {
+      lastWeightDate = latestMeasure.createdAt;
+      lastWeight = latestMeasure.weightKg;
+      lastWaist = latestMeasure.waistCm;
+    } else {
+      const profile = await Profile.findOne({ userId: req.userId }).lean();
+      if (profile && profile.baselineWeightKg) {
+        lastWeightDate = profile.createdAt;
+        lastWeight = profile.baselineWeightKg;
+      }
+    }
+    
+    let daysSinceLastWeight = 999;
+    if (lastWeightDate) {
+      const { daysDiff, getTodayString } = require('../utils');
+      const lastDateStr = new Date(lastWeightDate).toISOString().split('T')[0];
+      daysSinceLastWeight = daysDiff(getTodayString(), lastDateStr);
+    }
+    
+    const responseData = log ? { ...log } : { date: req.params.date, empty: true };
+    responseData.weightContext = {
+      daysSinceLastWeight,
+      lastWeight,
+      lastWaist,
+      unlocksInDays: Math.max(0, 15 - daysSinceLastWeight)
+    };
+    
+    res.json(responseData);
   } catch (err) { next(err); }
 });
 

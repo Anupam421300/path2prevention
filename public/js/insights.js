@@ -18,7 +18,7 @@ async function loadInsights() {
     window._insAnalytics = analytics;
     container.innerHTML = buildInsightsHTML(analytics, correlations, recs);
     renderInsightsChart(analytics, currentCategory);
-    bindInsightsEvents(analytics);
+
   } catch (err) {
     container.innerHTML = errorState('Could not load insights.', () => loadInsights());
   }
@@ -61,8 +61,8 @@ function buildInsightsHTML(analytics, correlations, recs) {
       <div style="padding:26px;text-align:center;border-radius:14px;background:#f8f9fa;border:1px dashed #e7e8e9;">
         <span class="material-symbols-outlined" style="font-size:34px;color:#bbcabf;margin-bottom:10px;display:block;">lock</span>
         <p style="font-size: 17px;font-weight:700;margin-bottom:6px;">Not enough data</p>
-        <p style="font-size: 16px;color:#6c7a71;">Log for ${correlations?.daysNeeded || 9} more days to unlock correlations between your health signals.</p>
-        <p style="font-size: 15px;color:#bbcabf;margin-top:8px;">Requires minimum 14 days of logs</p>
+        <p style="font-size: 16px;color:#6c7a71;">Log for ${correlations?.daysNeeded || 3} more days to unlock correlations between your health signals.</p>
+        <p style="font-size: 15px;color:#bbcabf;margin-top:8px;">Requires minimum 3 days of logs</p>
       </div>
     `;
 
@@ -328,9 +328,7 @@ function runSimulation() {
   }, 500);
 }
 
-function bindInsightsEvents(analytics) {
-  window._insAnalytics = analytics;
-}
+
 
 function insightsSkeleton() {
   return `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">

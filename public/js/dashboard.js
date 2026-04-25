@@ -27,7 +27,6 @@ async function loadDashboard() {
     container.innerHTML = buildDashboardHTML(data);
     renderRiskGauge(data.riskScore);
     renderDashboardChart(data.chartData);
-    bindDashboardEvents(data);
 
 
     // Show recently resolved rec banner (U5)
@@ -43,6 +42,7 @@ async function loadDashboard() {
       container.prepend(banner);
     }
   } catch (err) {
+    console.error('Error loading dashboard:', err);
     container.innerHTML = errorState('Could not load dashboard.', () => loadDashboard());
   }
 }
@@ -412,7 +412,7 @@ function renderDashboardChart(chartData, metric) {
         responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { backgroundColor: '#191c1d', padding: 8, cornerRadius: 8, titleFont: { size: 13 }, bodyFont: { size: 14, weight: '700' }, displayColors: false },
+          tooltip: { backgroundColor: '#191c1d', titleColor: '#ffffff', bodyColor: '#ffffff', padding: 8, cornerRadius: 8, titleFont: { size: 13 }, bodyFont: { size: 14, weight: '700' }, displayColors: false },
         },
         scales: {
           x: { grid: { display: false }, ticks: { font: { size: 12 }, color: '#bbcabf', maxRotation: 0 }, border: { display: false } },
@@ -480,7 +480,7 @@ function renderWeightChart() {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { backgroundColor: '#191c1d', padding: 8, cornerRadius: 8, titleFont: { size: 13 }, bodyFont: { size: 14, weight: '700' }, displayColors: false, callbacks: { label: (ctx) => ctx.parsed.y + ' kg' } },
+        tooltip: { backgroundColor: '#191c1d', titleColor: '#ffffff', bodyColor: '#ffffff', padding: 8, cornerRadius: 8, titleFont: { size: 13 }, bodyFont: { size: 14, weight: '700' }, displayColors: false, callbacks: { label: (ctx) => ctx.parsed.y + ' kg' } },
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 12 }, color: '#bbcabf', maxRotation: 0 }, border: { display: false } },
@@ -491,11 +491,7 @@ function renderWeightChart() {
   });
 }
 
-function switchChartMetric(metric) {
-  // No longer needed — all charts visible at once
-}
 
-function bindDashboardEvents(data) { }
 
 function dashboardSkeleton() {
   return `
