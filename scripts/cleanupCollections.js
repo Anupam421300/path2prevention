@@ -1,9 +1,3 @@
-/**
- * Path2Prevention — One-Time DB Cleanup Script
- *
- * Drops collections that are no longer used by any backend route or frontend feature.
- * Run once: node scripts/cleanupCollections.js
- */
 
 'use strict';
 require('dotenv').config();
