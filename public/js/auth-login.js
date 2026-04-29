@@ -59,7 +59,7 @@ if (localStorage.getItem('p2p_token')) {
   window.location.href = '/app';
 }
 
-// ── Forgot Password Modal ──
+// ── Forgot Password Modal ── 
 let fpVerifiedEmail = '';
 let fpVerifiedDob = '';
 
