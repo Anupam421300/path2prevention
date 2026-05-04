@@ -89,9 +89,9 @@ html[data-theme="dark"] #tab-dashboard {
   --green-dark: #27AE60;
   --green-darker: #006D37;
   
-  --text-primary: #F2F7F4;
-  --text-secondary: #C8E0CE;
-  --text-muted: #6C7B6D;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
 
   /* Ambient Shadows instead of heavy 3D drops */
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2), 0 2px 12px rgba(46, 204, 113, 0.03);
@@ -113,34 +113,6 @@ html[data-theme="dark"] #tab-dashboard .card:hover {
   border-color: transparent;
   box-shadow: var(--shadow-float);
   transform: translateY(-4px) translateZ(0); /* Subtle lift */
-}
-html[data-theme="dark"] #tab-dashboard h1,
-html[data-theme="dark"] #tab-dashboard h3,
-html[data-theme="dark"] #tab-dashboard strong,
-html[data-theme="dark"] #tab-dashboard span {
-  /* Override inline hardcoded colors specifically for dashboard text where possible, 
-     but since some colors are hardcoded inline, we use !important for a few key ones */
-}
-
-/* Force inline color overrides for dark mode dashboard */
-html[data-theme="dark"] #tab-dashboard [style*="color:#191c1d"],
-html[data-theme="dark"] #tab-dashboard [style*="color:#0c1e1a"] {
-  color: var(--text-primary) !important;
-}
-html[data-theme="dark"] #tab-dashboard [style*="color:#3c4a42"],
-html[data-theme="dark"] #tab-dashboard [style*="color:#5c7068"] {
-  color: var(--text-secondary) !important;
-}
-html[data-theme="dark"] #tab-dashboard [style*="color:#6c7a71"] {
-  color: var(--text-muted) !important;
-}
-html[data-theme="dark"] #tab-dashboard [style*="background:#f8f9fa"],
-html[data-theme="dark"] #tab-dashboard [style*="background:white"] {
-  background: var(--bg-surface-low) !important;
-}
-html[data-theme="dark"] #tab-dashboard [style*="border-color:#e7e8e9"],
-html[data-theme="dark"] #tab-dashboard [style*="border:1px solid #e7e8e9"] {
-  border-color: var(--border-glass) !important;
 }
 
 /* Theme Toggle Switch CSS */
