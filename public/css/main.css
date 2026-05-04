@@ -71,40 +71,48 @@
   --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ── Premium Dark Mode Theme ── */
+/* ── Premium Dark Mode Theme (Stitch MCP 'Clinical Editorial' Aesthetic) ── */
 html[data-theme="dark"] {
-  --bg-page: #040c08; /* Deep clinical dark green/black */
+  --bg-page: #0D1A12; /* Deep clinical dark green canvas */
 }
 
 html[data-theme="dark"] #tab-dashboard {
-  --bg-card: rgba(10, 25, 18, 0.6);
-  --bg-card-solid: #0a1912;
-  --bg-surface-low: rgba(255, 255, 255, 0.02);
-  --bg-surface-high: rgba(255, 255, 255, 0.06);
-  --border-card: rgba(255, 255, 255, 0.03);
-  --border-glass: rgba(255, 255, 255, 0.08);
-  --divider: rgba(255, 255, 255, 0.08);
+  --bg-card: #1A2C20; /* Solid tonal elevation, no glass */
+  --bg-card-solid: #1A2C20;
+  --bg-surface-low: #132418;
+  --bg-surface-high: #213528;
+  --border-card: transparent; /* No lines rule */
+  --border-glass: transparent;
+  --divider: rgba(255, 255, 255, 0.05);
 
-  --green-primary: #34d399; /* Neon mint */
-  --green-dark: #10b981;
-  --green-darker: #059669;
+  --green-primary: #2ECC71; /* Vibrant growth green */
+  --green-dark: #27AE60;
+  --green-darker: #006D37;
   
-  --text-primary: #f0fdf4;
-  --text-secondary: #a7f3d0;
-  --text-muted: #6ee7b7;
+  --text-primary: #F2F7F4;
+  --text-secondary: #C8E0CE;
+  --text-muted: #6C7B6D;
 
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(52, 211, 153, 0.04);
-  --shadow-float: 0 24px 48px rgba(0, 0, 0, 0.4), 0 12px 24px rgba(52, 211, 153, 0.08);
-  --shadow-card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* Ambient Shadows instead of heavy 3D drops */
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2), 0 2px 12px rgba(46, 204, 113, 0.03);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(46, 204, 113, 0.06);
+  --shadow-card-inset: none;
 }
 
 /* Apply specific overrides to dashboard elements in dark mode */
 html[data-theme="dark"] #tab-dashboard .card {
-  box-shadow: var(--shadow-md), var(--shadow-card-inset);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none; /* Ghost borders only if needed, but 'No Lines' preferred */
+}
+html[data-theme="dark"] #tab-dashboard .card::before {
+  display: none; /* Remove the glass glare effect */
 }
 html[data-theme="dark"] #tab-dashboard .card:hover {
-  border-color: rgba(52, 211, 153, 0.3);
-  box-shadow: var(--shadow-float), var(--shadow-card-inset);
+  border-color: transparent;
+  box-shadow: var(--shadow-float);
+  transform: translateY(-4px) translateZ(0); /* Subtle lift */
 }
 html[data-theme="dark"] #tab-dashboard h1,
 html[data-theme="dark"] #tab-dashboard h3,
