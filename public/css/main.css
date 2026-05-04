@@ -109,17 +109,18 @@ html[data-theme="dark"] .drawer-panel {
   color: inherit;
 }
 
-/* Apply specific overrides to dashboard elements in dark mode */
-html[data-theme="dark"] #tab-dashboard .card {
+/* Apply specific overrides to all cards in dark mode */
+html[data-theme="dark"] .card {
   box-shadow: var(--shadow-md);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border: none; /* Ghost borders only if needed, but 'No Lines' preferred */
+  background: var(--bg-card-solid);
 }
-html[data-theme="dark"] #tab-dashboard .card::before {
+html[data-theme="dark"] .card::before {
   display: none; /* Remove the glass glare effect */
 }
-html[data-theme="dark"] #tab-dashboard .card:hover {
+html[data-theme="dark"] .card:hover {
   border-color: transparent;
   box-shadow: var(--shadow-float);
   transform: translateY(-4px) translateZ(0); /* Subtle lift */
