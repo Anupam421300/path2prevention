@@ -74,9 +74,6 @@
 /* ── Premium Dark Mode Theme (Stitch MCP 'Clinical Editorial' Aesthetic) ── */
 html[data-theme="dark"] {
   --bg-page: #0D1A12; /* Deep clinical dark green canvas */
-}
-
-html[data-theme="dark"] #tab-dashboard {
   --bg-card: #1A2C20; /* Solid tonal elevation, no glass */
   --bg-card-solid: #1A2C20;
   --bg-surface-low: #132418;
@@ -97,6 +94,19 @@ html[data-theme="dark"] #tab-dashboard {
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2), 0 2px 12px rgba(46, 204, 113, 0.03);
   --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(46, 204, 113, 0.06);
   --shadow-card-inset: none;
+
+  color: var(--text-primary); /* Force text inheritance in this tree */
+}
+
+/* Ensure all typography elements inherit the dark mode color */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] p,
+html[data-theme="dark"] span,
+html[data-theme="dark"] .modal-panel,
+html[data-theme="dark"] .drawer-panel {
+  color: inherit;
 }
 
 /* Apply specific overrides to dashboard elements in dark mode */
@@ -2244,8 +2254,9 @@ textarea {
 }
 
 .modal-panel {
-  background: #ffffff;
-  border-radius: 20px;
+  background: var(--bg-card-solid, white);
+  color: inherit;
+  border-radius: 28px;
   box-shadow: 0 20px 60px rgba(25, 28, 29, 0.1), 0 8px 20px rgba(25, 28, 29, 0.06);
   width: 100%;
   max-width: 520px;
@@ -2280,10 +2291,10 @@ textarea {
 }
 
 .drawer-panel {
-  width: 380px;
-  max-width: 100%;
-  background: #ffffff;
-  box-shadow: -20px 0 60px rgba(25, 28, 29, 0.08);
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card-solid, white);
+  box-shadow: -10px 0 40px rgba(25, 28, 29, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
