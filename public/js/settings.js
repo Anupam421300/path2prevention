@@ -28,7 +28,7 @@ function buildSettingsHTML(profile, program) {
   return `
     <div style="margin-bottom:26px;">
       <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.5px;">Settings</h1>
-      <p style="font-size: 17px;color:#6c7a71;">Manage your profile, preferences, and data.</p>
+      <p style="font-size: 17px;color:var(--text-muted);">Manage your profile, preferences, and data.</p>
     </div>
 
     <div class="set-bento-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -39,14 +39,14 @@ function buildSettingsHTML(profile, program) {
           <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#006c49,#10b981);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;color:white;flex-shrink:0;">${initials}</div>
           <div>
             <h2 style="font-size: 24px;font-weight:800;margin-bottom:2px;">${escapeHTML(profile.firstName)} ${escapeHTML(profile.lastName)}</h2>
-            <p style="font-size: 17px;color:#6c7a71;">Member since ${joinDate}</p>
+            <p style="font-size: 17px;color:var(--text-muted);">Member since ${joinDate}</p>
           </div>
         </div>
 
         <div class="set-mobile-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;">
           <div class="input-group" style="margin-bottom:0; grid-column: span 2;">
             <label>Email</label>
-            <input class="input-field" type="email" value="${escapeHTML(profile.email || '')}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
+            <input class="input-field" type="email" value="${escapeHTML(profile.email || '')}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:var(--text-muted);opacity:0.8;">
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>First name</label>
@@ -58,11 +58,11 @@ function buildSettingsHTML(profile, program) {
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Date of birth</label>
-            <input class="input-field" type="date" id="setDob" value="${profile.dob ? profile.dob.split('T')[0] : ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
+            <input class="input-field" type="date" id="setDob" value="${profile.dob ? profile.dob.split('T')[0] : ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:var(--text-muted);opacity:0.8;">
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Sex</label>
-            <select class="input-field" id="setSex" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
+            <select class="input-field" id="setSex" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:var(--text-muted);opacity:0.8;">
               <option value="">Select</option>
               <option value="male" ${profile.sex === 'male' ? 'selected' : ''}>Male</option>
               <option value="female" ${profile.sex === 'female' ? 'selected' : ''}>Female</option>
@@ -71,11 +71,11 @@ function buildSettingsHTML(profile, program) {
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Height (cm)</label>
-            <input class="input-field" type="number" id="setHeight" value="${profile.heightCm || ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
+            <input class="input-field" type="number" id="setHeight" value="${profile.heightCm || ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:var(--text-muted);opacity:0.8;">
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Current Weight (kg)</label>
-            <input class="input-field" type="number" id="setWeight" value="${profile.currentWeightKg || ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:#6c7a71;opacity:0.8;">
+            <input class="input-field" type="number" id="setWeight" value="${profile.currentWeightKg || ''}" disabled style="background:var(--bg-surface-low);cursor:not-allowed;color:var(--text-muted);opacity:0.8;">
           </div>
         </div>
 
@@ -88,18 +88,18 @@ function buildSettingsHTML(profile, program) {
       <div class="card fh-lock-card" style="padding:26px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
           <h3 style="font-size: 19px;font-weight:700;">Family History</h3>
-          <span class="material-symbols-outlined" style="font-size: 22px;color:#6c7a71;">lock</span>
+          <span class="material-symbols-outlined" style="font-size: 22px;color:var(--text-muted);">lock</span>
         </div>
         ${profile.consentAccepted
       ? `<div style="display:flex;flex-direction:column;gap:8px;">
               ${(fhConditions).map(c => `
-                <div style="display:flex;align-items:center;gap:8px;font-size: 15px;color:#3c4a42;font-weight:600;">
+                <div style="display:flex;align-items:center;gap:8px;font-size: 15px;color:var(--text-secondary);font-weight:600;">
                   <span class="material-symbols-outlined" style="font-size: 20px;color:#006c49;">check_circle</span>${c}
                 </div>
-              `).join('') || '<p style="color:#6c7a71;font-size: 17px;">No conditions recorded.</p>'}
-              <p style="font-size: 15px;color:#6c7a71;font-style:italic;margin-top:10px;">Locked after consent — cannot be edited for data integrity.</p>
+              `).join('') || '<p style="color:var(--text-muted);font-size: 17px;">No conditions recorded.</p>'}
+              <p style="font-size: 15px;color:var(--text-muted);font-style:italic;margin-top:10px;">Locked after consent — cannot be edited for data integrity.</p>
             </div>`
-      : `<p style="font-size: 17px;color:#6c7a71;font-style:italic;">Family history not yet entered or consent not given.</p>`
+      : `<p style="font-size: 17px;color:var(--text-muted);font-style:italic;">Family history not yet entered or consent not given.</p>`
     }
       </div>
 
@@ -115,14 +115,14 @@ function buildSettingsHTML(profile, program) {
               <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size: 17px;">
                 <span>Week ${program.currentWeek || 1}/4</span><span style="color:#006c49;font-weight:700;">${((program.currentWeek || 1)) * 25}% complete</span>
               </div>
-              <div style="height:8px;background:#e7e8e9;border-radius:8px;overflow:hidden;">
+              <div style="height:8px;background:var(--border-glass);border-radius:8px;overflow:hidden;">
                 <div style="height:100%;background:#006c49;width:${(program.currentWeek || 1) * 25}%;border-radius:8px;"></div>
               </div>
-              <p style="font-size: 16px;color:#6c7a71;margin-top:10px;">Started ${program.startedAt ? new Date(program.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</p>
+              <p style="font-size: 16px;color:var(--text-muted);margin-top:10px;">Started ${program.startedAt ? new Date(program.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</p>
               ${(program.completedWeeks || []).length > 0 ? `<p style="font-size: 15px;color:#006c49;font-weight:600;margin-top:6px;">✓ Weeks ${(program.completedWeeks || []).join(', ')} completed</p>` : ''}
             </div>`
       : `<div>
-              <p style="font-size: 17px;color:#3c4a42;margin-bottom:18px;line-height:1.5;">Build transformative health habits with our 4-week structured path.</p>
+              <p style="font-size: 17px;color:var(--text-secondary);margin-bottom:18px;line-height:1.5;">Build transformative health habits with our 4-week structured path.</p>
               <button onclick="enrollProgram()" class="btn btn-primary btn-sm" style="width:100%;">Start my 30-day challenge</button>
             </div>`
     }
@@ -156,7 +156,7 @@ function buildSettingsHTML(profile, program) {
             <span class="material-symbols-outlined" style="font-size: 20px;">picture_as_pdf</span> Download PDF Report
           </button>
         </div>
-        <p style="font-size: 15px;color:#6c7a71;margin-top:14px;line-height:1.5;">All your health logs and risk assessments exported in a single file.</p>
+        <p style="font-size: 15px;color:var(--text-muted);margin-top:14px;line-height:1.5;">All your health logs and risk assessments exported in a single file.</p>
       </div>
 
       <!-- Security -->
@@ -176,7 +176,7 @@ function buildSettingsHTML(profile, program) {
           </div>
           <div style="padding:22px;border:1px solid rgba(186,26,26,0.2);border-radius:14px;background:rgba(186,26,26,0.03);display:flex;flex-direction:column;">
             <h4 style="font-size: 18px;font-weight:700;color:#ba1a1a;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><span class="material-symbols-outlined" style="font-size:22px;">warning</span> Danger Zone</h4>
-            <p style="font-size: 15px;color:#6c7a71;margin-bottom:20px;line-height:1.5;">This will permanently delete all your data and cannot be undone. Please be absolutely certain before proceeding.</p>
+            <p style="font-size: 15px;color:var(--text-muted);margin-bottom:20px;line-height:1.5;">This will permanently delete all your data and cannot be undone. Please be absolutely certain before proceeding.</p>
             <button onclick="confirmDeleteAccount()" class="btn btn-danger btn-sm" style="width:100%;margin-top:auto;">Delete my account</button>
           </div>
         </div>

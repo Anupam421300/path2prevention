@@ -49,19 +49,19 @@ function buildInsightsHTML(analytics, correlations, recs) {
       const labelB = labelMap[pair.signalB] || pair.signalB || '';
       const displayLabel = pair.label || `${labelA} ↔ ${labelB}`;
       return `
-      <div style="padding:16px;border-radius:14px;background:#f8f9fa;margin-bottom:12px;">
+      <div style="padding:16px;border-radius:14px;background:var(--bg-surface-low);margin-bottom:12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
           <span style="font-size: 17px;font-weight:700;">${displayLabel}</span>
         </div>
-        <p style="font-size: 16px;color:#3c4a42;">${pair.insight || ''}</p>
+        <p style="font-size: 16px;color:var(--text-secondary);">${pair.insight || ''}</p>
         ${pair.actionSuggestion ? `<p style="font-size: 15px;color:#006c49;font-weight:600;margin-top:6px;">→ ${pair.actionSuggestion}</p>` : ''}
       </div>
     `}).join('')
     : `
-      <div style="padding:26px;text-align:center;border-radius:14px;background:#f8f9fa;border:1px dashed #e7e8e9;">
+      <div style="padding:26px;text-align:center;border-radius:14px;background:var(--bg-surface-low);border:1px dashed var(--border-glass);">
         <span class="material-symbols-outlined" style="font-size:34px;color:#bbcabf;margin-bottom:10px;display:block;">lock</span>
         <p style="font-size: 17px;font-weight:700;margin-bottom:6px;">Not enough data</p>
-        <p style="font-size: 16px;color:#6c7a71;">Log for ${correlations?.daysNeeded || 3} more days to unlock correlations between your health signals.</p>
+        <p style="font-size: 16px;color:var(--text-muted);">Log for ${correlations?.daysNeeded || 3} more days to unlock correlations between your health signals.</p>
         <p style="font-size: 15px;color:#bbcabf;margin-top:8px;">Requires minimum 3 days of logs</p>
       </div>
     `;
@@ -69,7 +69,7 @@ function buildInsightsHTML(analytics, correlations, recs) {
   return `
     <div style="margin-bottom:26px;">
       <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;">Insights</h1>
-      <p style="font-size: 17px;color:#6c7a71;">Trends, correlations, and personalised recommendations.</p>
+      <p style="font-size: 17px;color:var(--text-muted);">Trends, correlations, and personalised recommendations.</p>
     </div>
 
     <div class="ins-bento-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -98,7 +98,7 @@ function buildInsightsHTML(analytics, correlations, recs) {
           <span class="material-symbols-outlined" style="font-size: 24px;color:#8b5cf6;">science</span>
           <h3 style="font-size: 19px;font-weight:700;">What-If Simulator</h3>
         </div>
-        <p style="font-size: 16px;color:#6c7a71;margin-bottom:18px;">Adjust sliders to see your projected risk score change.</p>
+        <p style="font-size: 16px;color:var(--text-muted);margin-bottom:18px;">Adjust sliders to see your projected risk score change.</p>
 
         ${simSlider('simActivity', 'Daily activity (min)', 0, 120, 30, 'min')}
         ${simSlider('simSteps', 'Daily steps', 0, 15000, 5000, 'steps', 500)}
@@ -107,8 +107,8 @@ function buildInsightsHTML(analytics, correlations, recs) {
         ${simSlider('simSugary', 'Sugary drinks / week', 0, 30, state.analytics?.avgSugaryDrinks7d || 5, 'drinks', 1)}
         ${simSlider('simFastFood', 'Fast food / week', 0, 14, state.analytics?.avgFastFood7d || 2, 'meals', 1)}
 
-        <div id="simResult" style="margin-top:18px;padding:22px;border-radius:14px;background:#f8f9fa;text-align:center;transition:all 0.3s;">
-          <p style="font-size: 16px;color:#6c7a71;">Move sliders to see projection</p>
+        <div id="simResult" style="margin-top:18px;padding:22px;border-radius:14px;background:var(--bg-surface-low);text-align:center;transition:all 0.3s;">
+          <p style="font-size: 16px;color:var(--text-muted);">Move sliders to see projection</p>
         </div>
       </div>
 
@@ -152,7 +152,7 @@ function renderRecList(recs) {
 
   return recs.map(r => {
     const priorityColors = { high: '#ef4444', moderate: '#f59e0b', low: '#10b981' };
-    const pc = priorityColors[r.priority] || '#6c7a71';
+    const pc = priorityColors[r.priority] || 'var(--text-muted)';
     const catIcon = { LIFESTYLE: 'directions_run', GENETICS: 'family_history', MEDICAL: 'local_hospital' };
 
     return `
@@ -164,16 +164,16 @@ function renderRecList(recs) {
           </div>
           <div style="display:flex;gap:6px;">
             ${r.status === 'active' ? `
-              <button onclick="snoozeRec('${r._id}')" class="btn btn-sm btn-ghost" style="padding:6px 10px;min-height:auto;font-size: 16px;color:#6c7a71;">Snooze 7d</button>
+              <button onclick="snoozeRec('${r._id}')" class="btn btn-sm btn-ghost" style="padding:6px 10px;min-height:auto;font-size: 16px;color:var(--text-muted);">Snooze 7d</button>
               <button onclick="resolveRec('${r._id}')" class="btn btn-sm btn-ghost" style="padding:6px 10px;min-height:auto;font-size: 16px;color:#006c49;">Done ✓</button>
             ` : ''}
           </div>
         </div>
         <h4 style="font-size: 19px;font-weight:700;margin-bottom:10px;">${r.title}</h4>
-        <p style="font-size: 17px;color:#3c4a42;line-height:1.5;margin-bottom:12px;">${r.why}</p>
+        <p style="font-size: 17px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;">${r.why}</p>
         ${r.familyHistoryNote ? `<div style="padding:12px 12px;border-radius:10px;background:#fef3c7;font-size: 16px;color:#92400e;margin-bottom:12px;"><span class="material-symbols-outlined" style="font-size: 18px;vertical-align:middle;">family_history</span> ${r.familyHistoryNote}</div>` : ''}
         <ul style="list-style:none;padding:0;margin-bottom:14px;">
-          ${(r.actions || []).map(a => `<li style="font-size: 16px;color:#3c4a42;padding:3px 0;display:flex;gap:6px;"><span style="color:#006c49;">→</span>${a}</li>`).join('')}
+          ${(r.actions || []).map(a => `<li style="font-size: 16px;color:var(--text-secondary);padding:3px 0;display:flex;gap:6px;"><span style="color:#006c49;">→</span>${a}</li>`).join('')}
         </ul>
 
       </div>
@@ -271,10 +271,10 @@ function renderInsightsChart(analytics, category) {
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { backgroundColor: '#191c1d', padding: 10, cornerRadius: 10 } },
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: 'var(--text-primary)', padding: 10, cornerRadius: 10 } },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 13 }, color: '#6c7a71' } },
-        y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 13 }, color: '#6c7a71' } }
+        x: { grid: { display: false }, ticks: { font: { size: 13 }, color: 'var(--text-muted)' } },
+        y: { grid: { color: '#f0f0f0' }, ticks: { font: { size: 13 }, color: 'var(--text-muted)' } }
       }
     }
   });
@@ -313,17 +313,17 @@ function runSimulation() {
       const delta = result.delta || 0;
       const projectedScore = result.simulatedScore ?? result.projectedScore ?? 0;
       const projectedLevel = result.simulatedLevel || result.projectedLevel || '';
-      const color = delta < 0 ? '#006c49' : delta > 0 ? '#ba1a1a' : '#6c7a71';
+      const color = delta < 0 ? '#006c49' : delta > 0 ? '#ba1a1a' : 'var(--text-muted)';
       const sign = delta < 0 ? '↓' : delta > 0 ? '↑' : '→';
       simResult.innerHTML = `
         <div style="font-size:30px;font-weight:900;color:${color};">${sign} ${Math.abs(delta)} pts</div>
-        <div style="font-size: 17px;color:#6c7a71;margin-top:6px;">Projected score: <strong style="color:${color};">${projectedScore}/100</strong> · ${projectedLevel}</div>
-        <div style="height:4px;background:#e7e8e9;border-radius:4px;margin-top:12px;overflow:hidden;">
+        <div style="font-size: 17px;color:var(--text-muted);margin-top:6px;">Projected score: <strong style="color:${color};">${projectedScore}/100</strong> · ${projectedLevel}</div>
+        <div style="height:4px;background:var(--border-glass);border-radius:4px;margin-top:12px;overflow:hidden;">
           <div style="height:100%;background:${color};width:${projectedScore}%;transition:width 0.5s;border-radius:4px;"></div>
         </div>
       `;
     } catch {
-      simResult.innerHTML = `<p style="font-size: 16px;color:#6c7a71;">Could not run simulation. Please log some data first.</p>`;
+      simResult.innerHTML = `<p style="font-size: 16px;color:var(--text-muted);">Could not run simulation. Please log some data first.</p>`;
     }
   }, 500);
 }

@@ -55,7 +55,7 @@ function buildLogHTML(log) {
     <!-- Header -->
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px;flex-wrap:wrap;gap:12px;">
       <div>
-        <p style="font-size: 17px;color:#6c7a71;font-weight:500;margin-bottom:6px;">${today}</p>
+        <p style="font-size: 17px;color:var(--text-muted);font-weight:500;margin-bottom:6px;">${today}</p>
         <h1 style="font-size:28px;font-weight:800;letter-spacing:-0.5px;">Log Today</h1>
       </div>
       <div style="display:flex;gap:8px;">
@@ -91,7 +91,7 @@ function buildLogHTML(log) {
             >
             <button type="button" class="counter-btn" onclick="adjustStepsFree(1000)">+1k</button>
           </div>
-          <p style="font-size: 15px;color:#6c7a71;margin-top:6px;">Enter exact step count or tap ±1k to adjust</p>
+          <p style="font-size: 15px;color:var(--text-muted);margin-top:6px;">Enter exact step count or tap ±1k to adjust</p>
         </div>
 
         <div class="input-group" style="margin-top:18px;">
@@ -104,22 +104,22 @@ function buildLogHTML(log) {
           </button>
         </div>
 
-        <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;padding:18px;border:1px solid #e7e8e9;border-radius:14px;background:#f8f9fa;">
+        <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;padding:18px;border:1px solid var(--border-glass);border-radius:14px;background:var(--bg-surface-low);">
           <div class="input-group" style="margin-bottom:0;">
             <label style="display:flex;justify-content:space-between;align-items:center;">
               Weight (kg)
               ${lockedWeight ? '<span class="material-symbols-outlined" style="font-size:16px;color:#ba1a1a;" title="Locked for 15 days">lock</span>' : ''}
             </label>
-            <input class="input-field" type="number" id="weightInput" placeholder="e.g. 72.5" min="20" max="300" step="0.1" value="${log.weightKg || ctx.lastWeight || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:#6c7a71;cursor:not-allowed;"' : ''}>
+            <input class="input-field" type="number" id="weightInput" placeholder="e.g. 72.5" min="20" max="300" step="0.1" value="${log.weightKg || ctx.lastWeight || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:var(--text-muted);cursor:not-allowed;"' : ''}>
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label style="display:flex;justify-content:space-between;align-items:center;">
               Waist (cm)
               ${lockedWeight ? '<span class="material-symbols-outlined" style="font-size:16px;color:#ba1a1a;" title="Locked for 15 days">lock</span>' : ''}
             </label>
-            <input class="input-field" type="number" id="waistInput" placeholder="e.g. 88" min="40" max="200" value="${log.waistCm || ctx.lastWaist || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:#6c7a71;cursor:not-allowed;"' : ''}>
+            <input class="input-field" type="number" id="waistInput" placeholder="e.g. 88" min="40" max="200" value="${log.waistCm || ctx.lastWaist || ''}" ${lockedWeight ? 'disabled style="background-color:#f1f3f4;color:var(--text-muted);cursor:not-allowed;"' : ''}>
           </div>
-          ${lockedWeight ? `<div style="grid-column:span 2;font-size:14px;color:#ba1a1a;margin-top:4px;display:flex;align-items:center;gap:4px;"><span class="material-symbols-outlined" style="font-size:16px;">lock</span> Unlocks in ${ctx.unlocksInDays} day${ctx.unlocksInDays !== 1 ? 's' : ''}</div>` : `<div style="grid-column:span 2;font-size:14px;color:#6c7a71;margin-top:4px;">Log every 15 days to track changes.</div>`}
+          ${lockedWeight ? `<div style="grid-column:span 2;font-size:14px;color:#ba1a1a;margin-top:4px;display:flex;align-items:center;gap:4px;"><span class="material-symbols-outlined" style="font-size:16px;">lock</span> Unlocks in ${ctx.unlocksInDays} day${ctx.unlocksInDays !== 1 ? 's' : ''}</div>` : `<div style="grid-column:span 2;font-size:14px;color:var(--text-muted);margin-top:4px;">Log every 15 days to track changes.</div>`}
         </div>
       </div>
 
@@ -142,7 +142,7 @@ function buildLogHTML(log) {
           <input type="hidden" id="waterVal" value="${water}">
           <style>
             .water-drop { background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;transition:all 0.2s; }
-            .water-drop .material-symbols-outlined { color:#e7e8e9; transition:color 0.2s; }
+            .water-drop .material-symbols-outlined { color:var(--border-glass); transition:color 0.2s; }
             .water-drop.filled .material-symbols-outlined { color:#0ea5e9; }
             .water-drop:hover .material-symbols-outlined { color:#0ea5e9; opacity:0.7; }
           </style>
@@ -151,7 +151,7 @@ function buildLogHTML(log) {
         <div class="log-mobile-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
           <div class="input-group" style="margin-bottom:0;">
             <label>Sugary drinks today</label>
-          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Sweet chai, soft drink, packaged juice, etc.</p>
+          <p style="font-size: 15px;color:var(--text-muted);margin-bottom:8px;">Sweet chai, soft drink, packaged juice, etc.</p>
             <div class="counter-input" style="justify-content:center;">
               <button class="counter-btn" onclick="adjustCounter('sugaryVal', -1)">−</button>
               <span class="counter-value" id="sugaryValDisplay">${sugary}</span>
@@ -161,7 +161,7 @@ function buildLogHTML(log) {
           </div>
           <div class="input-group" style="margin-bottom:0;">
             <label>Fried / processed</label>
-          <p style="font-size: 15px;color:#6c7a71;margin-bottom:8px;">Samosa, chips, burger, pizza, takeout</p>
+          <p style="font-size: 15px;color:var(--text-muted);margin-bottom:8px;">Samosa, chips, burger, pizza, takeout</p>
             <div class="counter-input" style="justify-content:center;">
               <button class="counter-btn" onclick="adjustCounter('fastFoodVal', -1)">−</button>
               <span class="counter-value" id="fastFoodValDisplay">${fastFood}</span>
@@ -194,7 +194,7 @@ function buildLogHTML(log) {
           <label>Stress level today</label>
           <div style="display:flex;gap:8px;">
             ${[1, 2, 3, 4, 5].map(v => `
-              <button data-stress="${v}" style="flex:1;padding:12px 4px;border-radius:10px;border:2px solid ${stress === v ? '#006c49' : '#e7e8e9'};background:${stress === v ? 'rgba(0,108,73,0.08)' : 'transparent'};font-size: 17px;font-weight:700;color:${stress === v ? '#006c49' : '#6c7a71'};cursor:pointer;transition:all 0.2s;"
+              <button data-stress="${v}" style="flex:1;padding:12px 4px;border-radius:10px;border:2px solid ${stress === v ? '#006c49' : 'var(--border-glass)'};background:${stress === v ? 'rgba(0,108,73,0.08)' : 'transparent'};font-size: 17px;font-weight:700;color:${stress === v ? '#006c49' : 'var(--text-muted)'};cursor:pointer;transition:all 0.2s;"
                     onclick="selectStress(${v})">${v}</button>
             `).join('')}
           </div>
@@ -220,17 +220,17 @@ function buildLogHTML(log) {
         </div>
 
         <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(187,202,191,0.2);">
-          <p style="font-size: 16px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#6c7a71;margin-bottom:14px;">Lab Values (optional)</p>
+          <p style="font-size: 16px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:14px;">Lab Values (optional)</p>
           <div class="log-mobile-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="input-group" style="margin-bottom:0;">
               <label>Fasting Glucose (mg/dL)</label>
               <input class="input-field" type="number" id="glucoseInput" placeholder="e.g. 95" min="50" max="400" value="${glucose}">
-              <p style="font-size: 15px;color:#6c7a71;margin-top:6px;">Normal: 70–99</p>
+              <p style="font-size: 15px;color:var(--text-muted);margin-top:6px;">Normal: 70–99</p>
             </div>
             <div class="input-group" style="margin-bottom:0;">
               <label>HbA1c (%)</label>
               <input class="input-field" type="number" id="hba1cInput" placeholder="e.g. 5.4" min="3" max="15" step="0.1" value="${log.hba1cPct || ''}">
-              <p style="font-size: 15px;color:#6c7a71;margin-top:6px;">Normal: &lt;5.7%</p>
+              <p style="font-size: 15px;color:var(--text-muted);margin-top:6px;">Normal: &lt;5.7%</p>
             </div>
           </div>
         </div>
@@ -264,7 +264,7 @@ function activityRow(a, i) {
       </select>
       <input class="input-field" type="number" placeholder="min" name="actMin" value="${a.minutes || ''}" min="1" max="300"
              style="width:70px;padding:10px 10px;font-size: 17px;">
-      <button onclick="this.closest('.activity-row').remove()" style="background:none;border:none;cursor:pointer;color:#6c7a71;padding:6px;">
+      <button onclick="this.closest('.activity-row').remove()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:6px;">
         <span class="material-symbols-outlined" style="font-size: 22px;">close</span>
       </button>
     </div>
@@ -309,9 +309,9 @@ function selectStress(val) {
   document.getElementById('stressVal').value = val;
   document.querySelectorAll('[data-stress]').forEach(el => {
     const isSelected = parseInt(el.dataset.stress) === val;
-    el.style.borderColor = isSelected ? '#006c49' : '#e7e8e9';
+    el.style.borderColor = isSelected ? '#006c49' : 'var(--border-glass)';
     el.style.background = isSelected ? 'rgba(0,108,73,0.08)' : 'transparent';
-    el.style.color = isSelected ? '#006c49' : '#6c7a71';
+    el.style.color = isSelected ? '#006c49' : 'var(--text-muted)';
   });
 }
 
