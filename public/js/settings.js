@@ -128,6 +128,23 @@ function buildSettingsHTML(profile, program) {
     }
       </div>
 
+      <!-- Appearance -->
+      <div class="card set-card-span-2" style="grid-column:span 2;padding:26px;">
+        <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">Appearance</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;background:rgba(255,255,255,0.4);border-radius:12px;border:1px solid rgba(0,0,0,0.05);">
+          <div>
+            <div style="font-size: 17px;font-weight:600;color:var(--text-primary);">Dark Mode (Dashboard)</div>
+            <div style="font-size: 15px;color:var(--text-muted);margin-top:4px;">Enable premium clinical dark mode for your dashboard view.</div>
+          </div>
+          <label class="theme-toggle" style="position:relative;display:inline-block;width:56px;height:30px;">
+            <input type="checkbox" id="themeToggle" onchange="toggleTheme()" style="opacity:0;width:0;height:0;" ${document.documentElement.getAttribute('data-theme') === 'dark' ? 'checked' : ''}>
+            <span class="slider" style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:34px;">
+              <span class="slider-circle" style="position:absolute;height:22px;width:22px;left:4px;bottom:4px;background-color:white;transition:.4s;border-radius:50%;"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
       <!-- Data Export -->
       <div class="card set-card-span-2" style="grid-column:span 2;padding:26px;">
         <h3 style="font-size: 19px;font-weight:700;margin-bottom:18px;">Export My Data</h3>
@@ -266,4 +283,16 @@ function confirmDeleteAccount() {
     setTimeout(() => logout(), 1500);
   }).catch(() => showToast('Deletion failed. Please try again.', 'error'));
 }
+
+function toggleTheme() {
+  const isDark = document.getElementById('themeToggle').checked;
+  if (isDark) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
+  }
+}
+
 
