@@ -71,6 +71,82 @@
   --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ── Premium Dark Mode Theme ── */
+html[data-theme="dark"] {
+  --bg-page: #040c08; /* Deep clinical dark green/black */
+}
+
+html[data-theme="dark"] #tab-dashboard {
+  --bg-card: rgba(10, 25, 18, 0.6);
+  --bg-card-solid: #0a1912;
+  --bg-surface-low: rgba(255, 255, 255, 0.02);
+  --bg-surface-high: rgba(255, 255, 255, 0.06);
+  --border-card: rgba(255, 255, 255, 0.03);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --divider: rgba(255, 255, 255, 0.08);
+
+  --green-primary: #34d399; /* Neon mint */
+  --green-dark: #10b981;
+  --green-darker: #059669;
+  
+  --text-primary: #f0fdf4;
+  --text-secondary: #a7f3d0;
+  --text-muted: #6ee7b7;
+
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(52, 211, 153, 0.04);
+  --shadow-float: 0 24px 48px rgba(0, 0, 0, 0.4), 0 12px 24px rgba(52, 211, 153, 0.08);
+  --shadow-card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Apply specific overrides to dashboard elements in dark mode */
+html[data-theme="dark"] #tab-dashboard .card {
+  box-shadow: var(--shadow-md), var(--shadow-card-inset);
+}
+html[data-theme="dark"] #tab-dashboard .card:hover {
+  border-color: rgba(52, 211, 153, 0.3);
+  box-shadow: var(--shadow-float), var(--shadow-card-inset);
+}
+html[data-theme="dark"] #tab-dashboard h1,
+html[data-theme="dark"] #tab-dashboard h3,
+html[data-theme="dark"] #tab-dashboard strong,
+html[data-theme="dark"] #tab-dashboard span {
+  /* Override inline hardcoded colors specifically for dashboard text where possible, 
+     but since some colors are hardcoded inline, we use !important for a few key ones */
+}
+
+/* Force inline color overrides for dark mode dashboard */
+html[data-theme="dark"] #tab-dashboard [style*="color:#191c1d"],
+html[data-theme="dark"] #tab-dashboard [style*="color:#0c1e1a"] {
+  color: var(--text-primary) !important;
+}
+html[data-theme="dark"] #tab-dashboard [style*="color:#3c4a42"],
+html[data-theme="dark"] #tab-dashboard [style*="color:#5c7068"] {
+  color: var(--text-secondary) !important;
+}
+html[data-theme="dark"] #tab-dashboard [style*="color:#6c7a71"] {
+  color: var(--text-muted) !important;
+}
+html[data-theme="dark"] #tab-dashboard [style*="background:#f8f9fa"],
+html[data-theme="dark"] #tab-dashboard [style*="background:white"] {
+  background: var(--bg-surface-low) !important;
+}
+html[data-theme="dark"] #tab-dashboard [style*="border-color:#e7e8e9"],
+html[data-theme="dark"] #tab-dashboard [style*="border:1px solid #e7e8e9"] {
+  border-color: var(--border-glass) !important;
+}
+
+/* Theme Toggle Switch CSS */
+.theme-toggle input:checked + .slider {
+  background-color: var(--green-primary);
+}
+.theme-toggle input:focus + .slider {
+  box-shadow: 0 0 1px var(--green-primary);
+}
+.theme-toggle input:checked + .slider .slider-circle {
+  transform: translateX(26px);
+}
+
+
 *,
 *::before,
 *::after {

@@ -17,6 +17,12 @@
   <link rel="stylesheet" href="/css/mobile.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <link rel="manifest" href="/manifest.json">
+  <script>
+    // Initialize premium dark mode preference to prevent FOUC
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
 </head>
 
 <body>
