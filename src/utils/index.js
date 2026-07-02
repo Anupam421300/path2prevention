@@ -88,9 +88,7 @@ function scoreToGrade(score) {
 }
 
 function getGreeting(firstName) {
-  const hour = new Date().getHours();
-  const time = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : hour < 21 ? 'evening' : 'night';
-  return `Good ${time}, ${firstName || 'there'}!`;
+   return `Hello, ${firstName || 'there'}!`;
 }
 
 function getDayOfYear() {
